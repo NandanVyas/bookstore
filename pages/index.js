@@ -16,7 +16,7 @@ export default function Home() {
      
     <NavBar/>
     <div>
-      <Image src='/book.jpg' alt='' height={3000} width={5000} />
+      <Image src='/book.jpg' alt='' height={3000} width={5000}/>
     </div>
     <Mid/>
     <Footer/>
