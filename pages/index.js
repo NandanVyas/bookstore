@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import NavBar from '../components/NavBar'
-import Footer from '../components/Footer'
+
 import Mid from '../components/Mid'
 
 export default function Home() {
@@ -14,12 +13,12 @@ export default function Home() {
       </Head>
 
      
-    <NavBar/>
+    
     <div>
       <Image src='/book.jpg' alt='' height={3000} width={5000}/>
     </div>
     <Mid/>
-    <Footer/>
+    
     </div>
   )
 }
