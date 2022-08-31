@@ -1,5 +1,11 @@
 import React, { useRef } from "react";
-import { AiOutlineCloseCircle, AiOutlineShoppingCart, AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/Ai";
+import {
+  AiOutlineCloseCircle,
+  AiOutlineShoppingCart,
+  AiOutlineMinusCircle,
+  AiOutlinePlusCircle,
+} from "react-icons/Ai";
+import { BsFillCartCheckFill } from "react-icons/Bs";
 
 const SideBar = () => {
   const toggleCart = () => {
@@ -22,7 +28,7 @@ const SideBar = () => {
       </div>
       <div
         ref={ref}
-        className="sidebar w-72 absolute top-0 right-0 bg-orange-100 px-6 py-10 transform transition-transform translate-x-full"
+        className="sidebar w-72 h-[100vh] absolute top-0 right-0 bg-orange-100 px-6 py-10 transform transition-transform translate-x-full"
       >
         <h2 className="text-center font-bold text-xl">SideBar</h2>
 
@@ -36,10 +42,24 @@ const SideBar = () => {
           <li>
             <div className="item flex my-5">
               <div className="w-2/3 font-semibold">Hi i am nandan</div>
-              <div className="w-1/3 font-semibold flex items-center justify-center text-xl"><AiOutlineMinusCircle className="mx-2 text-xl text-orange-500"/>1<AiOutlinePlusCircle className="mx-2 text-xl"/></div>
+              <div className="w-1/3 font-semibold flex items-center justify-center text-xl">
+                <AiOutlineMinusCircle className="mx-2 text-xl text-orange-600 curso-pointer" />
+                1
+                <AiOutlinePlusCircle className="mx-2 text-xl cusrsor-pointer text-orange-600" />
+              </div>
             </div>
           </li>
         </ol>
+        <div className="flex">
+          <button className="flex mr-4  text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
+            {" "}
+            <BsFillCartCheckFill className="m-1" /> Checkout{" "}
+          </button>
+          <button className="flex   text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
+            {" "}
+            Clear Cart{" "}
+          </button>
+        </div>
       </div>
     </div>
   );
