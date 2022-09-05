@@ -82,13 +82,14 @@ const login = () => {
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <Link href={"/forgotPassword"}><a
+                  
                   className="text-sm font-medium text-orange-600 hover:underline "
                 >
                   {/* dark:text-orange-500 */}
                   Forgot password?
                 </a>
+                </Link>
               </div>
               <button
                 type="submit"
