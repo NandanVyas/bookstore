@@ -12,10 +12,10 @@ const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
     
   return (
     <>
-      <div className="text-xl font-semibold mt-11 my-2">2.Review Cart Items</div>
+      <div className="text-xl font-semibold mt-11 ">2.Review Cart Items</div>
       <div>
         
-        <div className="sidebar   px-2 py-2 m-2 ">
+        <div className="sidebar  text-base px-2 py-2 m-2 ">
           
           <ol className="list-decimal font-semibold">
             {Object.keys(cart).length == 0 && (
