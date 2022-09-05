@@ -7,7 +7,7 @@ import {
 } from "react-icons/Ai";
 import { BsFillCartCheckFill } from "react-icons/Bs";
 
-const SideBar = () => {
+const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
@@ -39,23 +39,27 @@ const SideBar = () => {
           <AiOutlineCloseCircle className="text-2xl text-orange-600" />
         </span>
         <ol className="list-decimal font-semibold">
-          <li>
+          {Object.keys(cart).length ==0 && <div className="my-4 text-base font-semibold">No Items present in the cart</div>}
+          {Object.keys(cart).map((k)=>{return <li key={k}>
             <div className="item flex my-5">
-              <div className="w-2/3 font-semibold">Hi i am nandan</div>
+              <div className="w-2/3 font-semibold">{cart[k].name}</div>
               <div className="w-1/3 font-semibold flex items-center justify-center text-xl">
-                <AiOutlineMinusCircle className="mx-2 text-xl text-orange-600 curso-pointer" />
-                1
-                <AiOutlinePlusCircle className="mx-2 text-xl cusrsor-pointer text-orange-600" />
+                <AiOutlineMinusCircle onClick={()=>{removeFromCart(k,cart[k].qty-1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl text-orange-600 cursor-pointer" />
+                {cart[k].qty}
+                <AiOutlinePlusCircle onClick={()=>{removeFromCart(k,cart[k].qty+1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl cursor-pointer text-orange-600" />
               </div>
             </div>
-          </li>
+          </li>})}
         </ol>
         <div className="flex">
           <button className="flex mr-4  text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
             {" "}
             <BsFillCartCheckFill className="m-1" /> Checkout{" "}
           </button>
-          <button className="flex   text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
+          <button
+            className="flex   text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg"
+            onClick={clearCart}
+          >
             {" "}
             Clear Cart{" "}
           </button>

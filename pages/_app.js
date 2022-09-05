@@ -28,11 +28,12 @@ useEffect(() => {
 
 
 const saveCart=(myCart)=>{
-  localStorage.setItem("cart",myCart)
+  localStorage.setItem("cart",JSON.stringify(myCart))
   let subt=0
-  let keys=Objects.keys()
-  for(let i=0; keys.length;i++)
+  let keys=Object.keys(myCart)
+  for(let i=0; i<keys.length;i++)
   {
+    //console.log(keys)
     subt+=myCart[keys[i]].price * myCart[keys[i]].qty;
   }
   setSubTotal(subt)
@@ -47,12 +48,13 @@ const addToCart= (itemCode,qty,price,name,author) => {
     newCart[itemCode]={qty:1,price,name,author}
   }
   setCart(newCart)
+  //console.log(newCart)
   saveCart(newCart)
 
 }
 
 const removeFromCart= (itemCode,qty,price,name,author) => {
-  let newCart=cart
+  let newCart=JSON.parse(JSON.stringify(cart))
   if(itemCode in cart){
     newCart[itemCode].qty=newCart[itemCode].qty - qty;
   }
