@@ -17,6 +17,7 @@ useEffect(() => {
     if(localStorage.getItem("cart"))
   {
     setCart(JSON.parse(localStorage.getItem("cart")))
+    saveCart(JSON.parse(localStorage.getItem("cart")))
   }
 }
   catch(error){
@@ -24,6 +25,7 @@ useEffect(() => {
     localStorage.clear()
     
   }
+  
 }, [])
 
 
@@ -76,7 +78,7 @@ const clearCart =()=>{
 
   return (
     <>
-      <NavBar cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      <NavBar key={subTotal} cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
       <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
       <Footer />
     </>

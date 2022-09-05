@@ -7,7 +7,7 @@ import SideBar from './SideBar'
 const NavBar = ({cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
   //console.log(cart, addToCart,  removeFromCart, clearCart, subTotal)
   return (
-    <div className='flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md'>
+    <div className='flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md sticky top-0 z-10 bg-white'>
         <div className='logo mx-5'>
             <Link href='/'><a><Image src='/N V Bookstore-1.png' alt='' height={45} width={200} /></a></Link>
         </div>

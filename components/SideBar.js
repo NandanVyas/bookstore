@@ -1,4 +1,6 @@
 import React, { useRef } from "react";
+import Link from "next/link";
+
 import {
   AiOutlineCloseCircle,
   AiOutlineShoppingCart,
@@ -19,7 +21,7 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   };
   const ref = useRef();
   return (
-    <div>
+    <>
       <div
         onClick={toggleCart}
         className="cart absolute right-0 top-2 mx-4 cursor-pointer"
@@ -28,7 +30,7 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
       </div>
       <div
         ref={ref}
-        className="sidebar w-72 h-[100vh] absolute top-0 right-0 bg-orange-100 px-6 py-10 transform transition-transform translate-x-full"
+      className={`sidebar w-72 h-[100vh] absolute top-0 right-0 bg-orange-100 px-6 py-10 transform transition-transform ${Object.keys(cart).length===0 ? 'translate-x-full' :'translate-x-0'}`}
       >
         <h2 className="text-center font-bold text-xl">SideBar</h2>
 
@@ -44,18 +46,19 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
             <div className="item flex my-5">
               <div className="w-2/3 font-semibold">{cart[k].name}</div>
               <div className="w-1/3 font-semibold flex items-center justify-center text-xl">
-                <AiOutlineMinusCircle onClick={()=>{removeFromCart(k,cart[k].qty-1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl text-orange-600 cursor-pointer" />
+                <AiOutlineMinusCircle onClick={()=>{removeFromCart(k,1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl text-orange-600 cursor-pointer" />
                 {cart[k].qty}
-                <AiOutlinePlusCircle onClick={()=>{removeFromCart(k,cart[k].qty+1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl cursor-pointer text-orange-600" />
+                <AiOutlinePlusCircle onClick={()=>{addToCart(k,1,cart[k].price,cart[k].name,cart[k].author)}} className="mx-2 text-xl cursor-pointer text-orange-600" />
               </div>
             </div>
           </li>})}
         </ol>
+        <div className="my-2">SubTotal: ₹{subTotal} </div>
         <div className="flex">
-          <button className="flex mr-4  text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
+          <Link href={'/checkout'}><button className="flex mr-4  text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
             {" "}
             <BsFillCartCheckFill className="m-1" /> Checkout{" "}
-          </button>
+          </button></Link>
           <button
             className="flex   text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg"
             onClick={clearCart}
@@ -65,7 +68,7 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
