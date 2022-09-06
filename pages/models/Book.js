@@ -16,5 +16,6 @@ const BookSchema = new mongoose.Schema({
 
   mongoose.models = {}
   export default mongoose.model("Book",BookSchema);
-  // export default mongoose.models("Book",BookSchema);
-  // module.exports = mongoose.model('Book', BookSchema);
+  // export default mongoose.models.Book || mongoose.model("Book",BookSchema); 
+  //If we use the above comment the we dont need to use the line mongoose.models={}
+ 
