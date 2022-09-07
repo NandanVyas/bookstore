@@ -1,51 +1,71 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Signup = () => {
+  
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmpassword, setConfirmpassword] = useState();
 
-const [name, setName] = useState()
-const [email, setEmail] = useState()
-const [password, setPassword] = useState()
-const [confirmpassword, setConfirmpassword] = useState()
+  const handleChange = (e) => {
+    if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name == "password") {
+      setPassword(e.target.value);
+    } else if (e.target.name == "confirmpassword") {
+      setConfirmpassword(e.target.value);
+    }
+  };
 
-const handleChange = (e) => {
-  if(e.target.name=='name'){
-    setName(e.target.value)
-  }
-  else if(e.target.name=='email'){
-    setEmail(e.target.value)
-  }
-  else if(e.target.name=='password'){
-    setPassword(e.target.value)
-  }
-  else if(e.target.name=='confirmpassword'){
-    setConfirmpassword(e.target.value)
-  }
-
-}
-
-const handleSubmit = async (e) => {
-  e.preventDefault() 
-  const data = {name:name,email,password}
-  let res = await fetch('http://localhost:3000/api/addUser',
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type':'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  let response = await res.json()
-  //console.log(response)
-  setName('')
-  setEmail('')
-  setPassword('')
-  setConfirmpassword('')
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { name: name, email, password };
+    let res = await fetch("http://localhost:3000/api/addUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let response = await res.json();
+    //console.log(response)
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmpassword('')
+    toast.success("Your account has been created", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    
+  };
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="flex flex-col items-center justify-center md:h-full px-6 py-8 mx-auto  lg:py-0">
         <a
           href="#"
@@ -64,7 +84,11 @@ const handleSubmit = async (e) => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-orange-50">
               Create an account
             </h1>
-            <form onSubmit={handleSubmit}  className="space-y-4 md:space-y-6"  method="POST">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4 md:space-y-6"
+              method="POST"
+            >
               <div>
                 <label
                   htmlFor="name"
@@ -72,9 +96,9 @@ const handleSubmit = async (e) => {
                 >
                   Full Name
                 </label>
-                <input 
-                value={name}
-                onChange={handleChange}
+                <input
+                  value={name}
+                  onChange={handleChange}
                   type="name"
                   name="name"
                   id="name"
@@ -90,9 +114,9 @@ const handleSubmit = async (e) => {
                 >
                   Your email
                 </label>
-                <input  
-                value={email}
-                onChange={handleChange}
+                <input
+                  value={email}
+                  onChange={handleChange}
                   type="email"
                   name="email"
                   id="email"
@@ -108,9 +132,9 @@ const handleSubmit = async (e) => {
                 >
                   Password
                 </label>
-                <input 
-                value={password}
-                onChange={handleChange}
+                <input
+                  value={password}
+                  onChange={handleChange}
                   type="password"
                   name="password"
                   id="password"
@@ -121,17 +145,17 @@ const handleSubmit = async (e) => {
               </div>
               <div>
                 <label
-                  htmlFor="confirm-password"
+                  htmlFor="confirmpassword"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-orange-50"
                 >
                   Confirm password
                 </label>
-                <input 
-                value={confirmpassword}
-                onChange={handleChange}
-                  type="password"
-                  name="confirm-password"
-                  id="confirm-password"
+                <input
+                  value={confirmpassword}
+                  onChange={handleChange}
+                  type="confirm-password"
+                  name="confirmpassword"
+                  id="confirmpassword"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-500 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                   required=""
@@ -168,15 +192,15 @@ const handleSubmit = async (e) => {
               >
                 Create an account
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <div className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  href="/login"
                   className="font-medium text-orange-600 hover:underline dark:text-orange-500"
                 >
                   Login here
-                </a>
-              </p>
+                </Link>
+              </div>
             </form>
           </div>
         </div>
