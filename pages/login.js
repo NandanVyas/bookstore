@@ -7,8 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
 const Login = () => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -23,6 +22,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = { email, password };
     let res = await fetch("http://localhost:3000/api/getUser", {
       method: "POST",
@@ -36,34 +36,32 @@ const Login = () => {
     setEmail("");
     setPassword("");
     // setConfirmpassword('')
-    if(response.success)
-    {
-    toast.success("You are Logged In", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    setTimeout(()=>{
-    router.push('http://localhost:3000')
-    },2000);
-    
-  }
-  else{toast.error(response.error, {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });}
-  
-};
-  
+    if (response.success) {
+      toast.success("You are Logged In", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        router.push("http://localhost:3000");
+      }, 2000);
+    } else {
+      toast.error(response.error, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-800">
       <ToastContainer
@@ -95,7 +93,11 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit} method="POST">
+            <form
+              className="space-y-4 md:space-y-6"
+              onSubmit={handleSubmit}
+              method="POST"
+            >
               <div>
                 <label
                   htmlFor="email"
@@ -104,8 +106,8 @@ const Login = () => {
                   Your email
                 </label>
                 <input
-                onChange={handleChange}
-                value={email}
+                  onChange={handleChange}
+                  value={email}
                   type="email"
                   name="email"
                   id="email"
@@ -122,8 +124,8 @@ const Login = () => {
                   Password
                 </label>
                 <input
-                onChange={handleChange}
-                value={password}
+                  onChange={handleChange}
+                  value={password}
                   type="password"
                   name="password"
                   id="password"

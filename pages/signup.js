@@ -5,13 +5,13 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Signup = () => {
-  
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
+
+  const CryptoJS = require("crypto-js");
 
   const handleChange = (e) => {
     if (e.target.name == "name") {
@@ -27,7 +27,11 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { name: name, email, password };
+    const data = {
+      name: name,
+      email,
+      password: CryptoJS.AES.encrypt(password, "secret123").toString(),
+    };
     let res = await fetch("http://localhost:3000/api/addUser", {
       method: "POST",
       headers: {
@@ -40,7 +44,7 @@ const Signup = () => {
     setName("");
     setEmail("");
     setPassword("");
-    setConfirmpassword('')
+    setConfirmpassword("");
     toast.success("Your account has been created", {
       position: "bottom-center",
       autoClose: 3000,
@@ -50,7 +54,6 @@ const Signup = () => {
       draggable: true,
       progress: undefined,
     });
-    
   };
 
   return (
@@ -194,11 +197,10 @@ const Signup = () => {
               </button>
               <div className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
-                <Link
-                  href="/login"
-                  className="font-medium text-orange-600 hover:underline dark:text-orange-500"
-                >
-                  Login here
+                <Link href="/login">
+                  <a className="font-medium text-orange-600 hover:underline dark:text-orange-500">
+                    Login here
+                  </a>
                 </Link>
               </div>
             </form>
