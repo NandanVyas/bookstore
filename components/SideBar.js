@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import {
   AiOutlineCloseCircle,
@@ -9,7 +10,9 @@ import {
 } from "react-icons/Ai";
 import { BsFillCartCheckFill } from "react-icons/Bs";
 import { MdAccountCircle } from "react-icons/md";
-const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
+
+
+const SideBar = ({ key,user, cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
@@ -22,10 +25,13 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   const ref = useRef();
   return (
     <>
-      <div className="cart flex absolute right-0 top-4 mx-4 cursor-pointer">
-        <Link href={"/login"}><a>
-          <MdAccountCircle className="text-xl mx-2 md:text-2xl dark:text-orange-300" />
-          </a></Link>
+      <div className="cart flex absolute right-0 top-4 mx-4 cursor-pointer items-center">
+        {user.value && <Link href={"/signup"} className="items-center"><a className="mx-2 pt-2"><Image height={20} width={20} src="/logged-in.jpg" alt="User Logged In"   /></a></Link>}
+        {!user.value && <Link href={"/login"}>
+          <a>
+            <MdAccountCircle className="text-xl mx-2 md:text-2xl dark:text-orange-300" />
+          </a>
+        </Link>}
         <AiOutlineShoppingCart
           onClick={toggleCart}
           className="text-xl md:text-2xl dark:text-orange-300 "
@@ -58,7 +64,7 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                 <div className="item flex my-5">
                   <div className="w-2/3 font-bold">{cart[k].name}</div>
                   <div className="w-1/3 font-semibold flex items-center justify-center text-xl ">
-                    <AiOutlineMinusCircle 
+                    <AiOutlineMinusCircle
                       onClick={() => {
                         removeFromCart(
                           k,
@@ -89,7 +95,7 @@ const SideBar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
             );
           })}
         </ol>
-        <div className="my-2 font-bold">SubTotal :  ₹ {subTotal} </div>
+        <div className="my-2 font-bold">SubTotal : ₹ {subTotal} </div>
         <div className="flex">
           <Link href={"/checkout"}>
             <button className="flex mr-4 text-white dark:font-semibold dark:text-orange-500 bg-orange-500 dark:bg-gray-800 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 dark:hover:bg-gray-600 rounded text-lg">

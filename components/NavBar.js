@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {AiOutlineShoppingCart} from 'react-icons/Ai'
 import SideBar from './SideBar'
 
-const NavBar = ({cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
+const NavBar = ({user,key, cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
   //console.log(cart, addToCart,  removeFromCart, clearCart, subTotal)
   return (
     <div className='flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md sticky top-0 z-10 bg-white dark:bg-gray-900 dark:shadow-orange-500'>
@@ -20,7 +20,7 @@ const NavBar = ({cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
             </ul>
         </div>
         
-        <SideBar cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>
+        <SideBar user={user} key={key} cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>S
     </div>
   )
 }
