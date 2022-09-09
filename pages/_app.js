@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from 'react';
+import { Router, useRouter } from "next/router";
 
 
 function MyApp({ Component, pageProps }) {
@@ -9,6 +10,9 @@ function MyApp({ Component, pageProps }) {
   
 const [cart, setCart] = useState({})
 const [subTotal, setSubTotal] = useState(0)
+const [user, setUser] = useState({value: null})
+const [key, setKey] = useState(0)
+const router=useRouter()
 
 useEffect(() => {
   console.log("hey i am nandan useeffect fromj app.js")
@@ -25,8 +29,14 @@ useEffect(() => {
     localStorage.clear()
     
   }
+  const token =localStorage.getItem('token')
+  if(token)
+  {
+    setUser({value:token})
+    setKey(Math.random())
+  }
   
-}, [])
+}, [router.query])
 
 
 const saveCart=(myCart)=>{
@@ -78,7 +88,7 @@ const clearCart =()=>{
 
   return (
     <>
-      <NavBar key={subTotal} cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      <NavBar user={user} key={key} cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
       <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
       <Footer />
     </>
