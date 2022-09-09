@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 import {
   AiOutlineCloseCircle,
@@ -10,9 +11,21 @@ import {
 } from "react-icons/Ai";
 import { BsFillCartCheckFill } from "react-icons/Bs";
 import { MdAccountCircle } from "react-icons/md";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+const SideBar = ({
+  logout,
+  key,
+  user,
+  cart,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  subTotal,
+}) => {
+  const [profileDropdown, setProfileDropdown] = useState(false);
 
-const SideBar = ({ key,user, cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
@@ -25,13 +38,60 @@ const SideBar = ({ key,user, cart, addToCart, removeFromCart, clearCart, subTota
   const ref = useRef();
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="cart flex absolute right-0 top-4 mx-4 cursor-pointer items-center">
-        {user.value && <Link href={"/signup"} className="items-center"><a className="mx-2 pt-2"><Image height={20} width={20} src="/logged-in.jpg" alt="User Logged In"   /></a></Link>}
-        {!user.value && <Link href={"/login"}>
-          <a>
-            <MdAccountCircle className="text-xl mx-2 md:text-2xl dark:text-orange-300" />
-          </a>
-        </Link>}
+        {user.value && (
+          <Link href={"/profile"} className="items-center">
+            <a
+              className="mx-2 pt-2"
+              onMouseEnter={() => setProfileDropdown(true)}
+              onMouseLeave={() => setProfileDropdown(false)}
+            >
+              <Image
+                height={20}
+                width={20}
+                src="/logged-in.jpg"
+                alt="User Logged In"
+              />
+            </a>
+          </Link>
+        )}
+        {profileDropdown && (
+          <div
+            onMouseEnter={() => setProfileDropdown(true)}
+            onMouseLeave={() => setProfileDropdown(false)}
+            className="bg-orange-50 rounded-md w-20 h-24 text-sm p-2 dark:text-orange-600 dark:bg-gray-700 absolute top-6 right-8"
+          >
+            <ul className="">
+              <li className="pb-1 hover:text-gray-500 dark:hover:text-orange-200 font-bold">
+                <a href="/profile">Profile</a>
+              </li>
+              <li className="pb-1 hover:text-gray-500 dark:hover:text-orange-200 font-bold">
+                <a href="/orders">Orders</a>
+              </li>
+              <li className=" hover:text-gray-500 dark:hover:text-orange-200 font-bold">
+                <a onClick={logout}>Logout</a>
+              </li>
+            </ul>
+          </div>
+        )}
+        {!user.value && (
+          <Link href={"/login"}>
+            <a>
+              <MdAccountCircle className="text-xl mx-2 md:text-2xl dark:text-orange-300" />
+            </a>
+          </Link>
+        )}
         <AiOutlineShoppingCart
           onClick={toggleCart}
           className="text-xl md:text-2xl dark:text-orange-300 "
