@@ -15,10 +15,14 @@ const handler = async (req, res) => {
       if (
         req.body.email == user.email &&
         req.body.password == decryptedPassword
-      ) {
+      )
+      
+      {
+        const jwt = require('jsonwebtoken');
+        var token = jwt.sign({ email: user.email, name: user.name }, 'secretjwt' , { expiresIn: '5d' });
         res
           .status(200)
-          .json({ success: true, email: user.email, name: user.name });
+          .json({ success: true, token:token });
       } else {
         res.status(200).json({ success: false, error: "Invalid Password" });
       }
