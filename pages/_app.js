@@ -5,16 +5,24 @@ import { useEffect, useState } from "react";
 import { Router, useRouter } from "next/router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingBar from 'react-top-loading-bar'
 
 function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
   const [user, setUser] = useState({ value: null });
   const [key, setKey] = useState(0);
+  const [progress, setProgress] = useState(0)
   const router = useRouter();
 
   useEffect(() => {
     console.log("hey i am nandan useeffect from app.js");
+    router.events.on('routeChangeStart', ()=>{
+      setProgress(40)
+    } )
+    router.events.on('routeChangeComplete', ()=>{
+      setProgress(100)
+    } )
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -56,7 +64,7 @@ function MyApp({ Component, pageProps }) {
     setTimeout(() => {
       setUser({ value: null });
       setKey(Math.random());
-      router.push("http://localhost:3000/login");
+      router.push(`${process.env.NEXT_PUBLIC_HOST}/login`);
     }, 3000);
   };
   const addToCart = (itemCode, qty, price, name, author) => {
@@ -90,6 +98,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+    <LoadingBar
+        color='#ffa500'
+        progress={progress}
+        waitingTime={400}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <NavBar
         logout={logout}
         user={user}
