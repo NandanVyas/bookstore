@@ -1,19 +1,23 @@
 // Starting mongoDB
-const mongoose = require('mongoose');
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const OrderSchema = new mongoose.Schema({
-    userId: { type : String , required : true},
-    products: [
-        {
-            productID : {type : String},
-            quantity : {type : Number, default:1},
-        }
-    ],
-    address: {type:String ,required : true},
-    amount: {type:Number ,required : true},
-    status: {type:String , default:'Pending',required : true},
+const OrderSchema = new mongoose.Schema(
+  {
+    name: { type: String },
+    email: { type: String, required: true },
+    phone: { type: Number },
+    pincode: { type: Number },
+    orderID: { type: String, required: true },
+    paymentInfo: { type: String, default: "" },
+    products: { type: Object, required: true },
+    address: { type: String },
+    amount: { type: Number, required: true },
+    status: { type: String, default: "Initiated" },
   },
-  {timestamps:true});
+  { timestamps: true }
+);
 
-  mongoose.models={}
-  export default mongoose.model("Order",OrderSchema);
+// mongoose.models = {};
+// export default mongoose.model("Order", OrderSchema);
+export default mongoose.models.Order || mongoose.model("Order", OrderSchema);
