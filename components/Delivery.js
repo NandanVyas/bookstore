@@ -1,6 +1,40 @@
 import React from "react";
+import { useState } from "react";
 
-const Delivery = () => {
+const Delivery = ({setDisabled}) => {
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name == "address") {
+      setAddress(e.target.value);
+    } else if (e.target.name == "pincode") {
+      setPincode(e.target.value);
+    } else if (e.target.name == "city") {
+      setCity(e.target.value);
+    } else if (e.target.name == "state") {
+      setState(e.target.value);
+    } else if (e.target.name == "phone") {
+      setPhone(e.target.value);
+    }
+    if(name.length>=3 &&  address.length>=3 &&  pincode.length>=3 &&  phone.length>=3 &&  email.length>=3)
+    {
+      setDisabled(false)
+    }
+    else{
+      setDisabled(true)
+    }
+  };
+
   return (
     <>
       <div className="text-xl font-semibold my-4">1.Delivery Details</div>
@@ -10,6 +44,8 @@ const Delivery = () => {
             Full Name
           </label>
           <input
+            value={name}
+            onChange={handleChange}
             type="text"
             id="name"
             name="name"
@@ -21,6 +57,8 @@ const Delivery = () => {
             Email
           </label>
           <input
+            value={email}
+            onChange={handleChange}
             type="email"
             id="email"
             name="email"
@@ -34,6 +72,8 @@ const Delivery = () => {
             Address
           </label>
           <textarea
+            value={address}
+            onChange={handleChange}
             id="address"
             name="address"
             className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 h-20 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
@@ -46,6 +86,8 @@ const Delivery = () => {
             Phone
           </label>
           <input
+            value={phone}
+            onChange={handleChange}
             type="text"
             id="phone"
             name="phone"
@@ -57,6 +99,8 @@ const Delivery = () => {
             Pin Code
           </label>
           <input
+            value={pincode}
+            onChange={handleChange}
             type="phone"
             id="pincode"
             name="pincode"
@@ -67,9 +111,11 @@ const Delivery = () => {
       <div className="flex py-2 w-full sm:flex-row flex-col mx-auto  sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
         <div className="flex-grow w-full">
           <label htmlFor="city" className="leading-7 text-sm text-gray-600">
-          City
+            City
           </label>
           <input
+            value={city}
+            onChange={handleChange}
             type="text"
             id="city"
             name="city"
@@ -78,9 +124,11 @@ const Delivery = () => {
         </div>
         <div className="flex-grow w-full">
           <label htmlFor="state" className="leading-7 text-sm text-gray-600">
-          State
+            State
           </label>
           <input
+            value={state}
+            onChange={handleChange}
             type="text"
             id="state"
             name="state"

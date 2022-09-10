@@ -27,7 +27,7 @@ const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
               return (
                 <li key={k}>
                   <div className="item flex my-5">
-                    <div className="font-semibold">{cart[k].name}</div>
+                    <div className="font-semibold w-1/2">{cart[k].name}</div>
                     <div className="font-semibold flex items-center justify-center w-1/3 text-lg">
                       <AiOutlineMinusCircle
                         onClick={() => {
