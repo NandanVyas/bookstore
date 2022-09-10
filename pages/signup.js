@@ -6,10 +6,10 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
 
   const CryptoJS = require("crypto-js");
 
@@ -32,7 +32,7 @@ const Signup = () => {
       email,
       password: CryptoJS.AES.encrypt(password, "secret123").toString(),
     };
-    let res = await fetch("http://localhost:3000/api/addUser", {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

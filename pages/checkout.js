@@ -8,14 +8,19 @@ import { BsFillCartCheckFill } from "react-icons/Bs";
 import { useState } from "react";
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
-
-const [disabled, setDisabled] = useState(true)
+  const [address, setAddress] = useState("")
+  const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  
 
   const initiatePayment = async () => {
     let oid = Math.floor(Math.random() + Date.now());
 
     //fetch a transaction token
-    const data = { cart, subTotal, oid, email: "email" };
+    const data = { cart, subTotal, oid, email,address,name };
     //console.log(data) working
 
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
@@ -74,7 +79,7 @@ const [disabled, setDisabled] = useState(true)
       />
 
       <div className=" text-3xl text-center font-bold my-8 ">Checkout</div>
-      <Delivery setDisabled={setDisabled}/>
+      <Delivery setDisabled={setDisabled} name={name} setName={setName} phone={phone} setPhone={setPhone} pincode={pincode} setPincode={setPincode} address={address} setAddress={setAddress} email={email} setEmail={setEmail} />
       <Review
         cart={cart}
         addToCart={addToCart}

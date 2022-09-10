@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 const Login = () => {
   const router = useRouter();
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleChange = (e) => {
     if (e.target.name == "email") {
@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
 
     const data = { email, password };
-    let res = await fetch("http://localhost:3000/api/getUser", {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const Login = () => {
       });
       setTimeout(() => {
         router.push("http://localhost:3000");
-      }, 2000);
+      }, 3000);
     } else {
       toast.error(response.error, {
         position: "bottom-center",

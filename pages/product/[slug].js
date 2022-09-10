@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import mongoose from "mongoose";
 import Book from "../models/Book";
 
-const Post = ({ addToCart,book }) => {
+const Post = ({ addToCart, book }) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -121,9 +121,7 @@ const Post = ({ addToCart,book }) => {
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">
-                {book.desc}
-              </p>
+              <p className="leading-relaxed">{book.desc}</p>
               {/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
@@ -162,7 +160,13 @@ const Post = ({ addToCart,book }) => {
                 </span>
                 <button
                   onClick={() => {
-                    addToCart(book.slug, 1, book.price, book.title, book.author);
+                    addToCart(
+                      book.slug,
+                      1,
+                      book.price,
+                      book.title,
+                      book.author
+                    );
                   }}
                   className="flex ml-auto mr-16 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded"
                 >
@@ -187,17 +191,16 @@ const Post = ({ addToCart,book }) => {
       </section>
     </>
   );
-}
+};
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let book = await Book.findOne({slug: context.query.slug});
+  let book = await Book.findOne({ slug: context.query.slug });
   //let similar = await Book.find({title: books.title});
   return {
     props: { book: JSON.parse(JSON.stringify(book)) }, // will be passed to the page component as props
   };
 }
-
 
 export default Post;
