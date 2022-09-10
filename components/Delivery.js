@@ -1,12 +1,24 @@
 import React from "react";
 import { useState } from "react";
 
-const Delivery = ({setDisabled}) => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [email, setEmail] = useState("");
+const Delivery = ({
+  setDisabled,
+  name,
+  setName,
+  address,
+  setAddress,
+  phone,
+  setPhone,
+  pincode,
+  setPincode,
+  email,
+  setEmail,
+}) => {
+  // const [name, setName] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [pincode, setPincode] = useState("");
+  // const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
 
@@ -26,12 +38,16 @@ const Delivery = ({setDisabled}) => {
     } else if (e.target.name == "phone") {
       setPhone(e.target.value);
     }
-    if(name.length>=3 &&  address.length>=3 &&  pincode.length>=3 &&  phone.length>=3 &&  email.length>=3)
-    {
-      setDisabled(false)
-    }
-    else{
-      setDisabled(true)
+    if (
+      name.length >= 3 &&
+      address.length >= 3 &&
+      pincode.length >= 3 &&
+      phone.length >= 3 &&
+      email.length >= 3
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
   };
 
