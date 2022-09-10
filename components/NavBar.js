@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {AiOutlineShoppingCart} from 'react-icons/Ai'
 import SideBar from './SideBar'
 
-const NavBar = ({logout,user,key, cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
+const NavBar = ({logout,user, cart, addToCart,  removeFromCart, clearCart, subTotal}) => {
   //console.log(cart, addToCart,  removeFromCart, clearCart, subTotal)
+  //Keys cannot be forwarded to the component as it is a special prop
+  // console.log(key)
   return (
     <div className='flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md sticky top-0 z-10 bg-white dark:bg-gray-900 dark:shadow-orange-500'>
         <div className='logo mx-5'>
@@ -19,8 +21,8 @@ const NavBar = ({logout,user,key, cart, addToCart,  removeFromCart, clearCart, s
                 <Link href='/'><a><li>Menu4</li></a></Link>
             </ul>
         </div>
-        
-        <SideBar logout={logout} user={user} key={key} cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>
+        {/* key={key} */}
+        <SideBar logout={logout} user={user}  cart={cart} addToCart={addToCart}  removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>
     </div>
   )
 }

@@ -16,7 +16,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const SideBar = ({
   logout,
-  key,
   user,
   cart,
   addToCart,
@@ -56,6 +55,7 @@ const SideBar = ({
               className="mx-2 pt-2"
               onMouseEnter={() => setProfileDropdown(true)}
               onMouseLeave={() => setProfileDropdown(false)}
+              onTouchStart={() => setProfileDropdown(true)}
             >
               <Image
                 height={20}
@@ -74,10 +74,10 @@ const SideBar = ({
           >
             <ul className="">
               <li className="pb-1 hover:text-gray-500 dark:hover:text-orange-200 font-bold">
-                <a href="/profile">Profile</a>
+                <Link href="/profile">Profile</Link>
               </li>
               <li className="pb-1 hover:text-gray-500 dark:hover:text-orange-200 font-bold">
-                <a href="/orders">Orders</a>
+                <Link href="/orders">Orders</Link>
               </li>
               <li className=" hover:text-gray-500 dark:hover:text-orange-200 font-bold">
                 <a onClick={logout}>Logout</a>
