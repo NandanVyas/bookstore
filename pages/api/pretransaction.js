@@ -1,6 +1,8 @@
 const https = require("https");
 // const PaytmChecksum = require("node_modules/paytmchecksum/PaytmChecksum");
 const PaytmChecksum = require("paytmchecksum");
+import Order from "../models/Order";
+import connectDB from "../../middleware/mongoose";
 // const express = require('express')
 // const app = express()
 
@@ -18,12 +20,19 @@ const PaytmChecksum = require("paytmchecksum");
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-export default async function handler(req, res) {
-  //working
-  //console.log(req.method);
-  // res.status(200).json({ name: 'John Doe' })
+const handler = async (req, res) => {
   if (req.method == "POST") {
     
+    let order = new Order({
+      name:req.body.name,
+      email: req.body.email,
+      orderID: req.body.oid,
+      amount: req.body.subTotal,
+      products: req.body.cart,
+      address:req.body.address,
+    });
+    await order.save();
+
     var paytmParams = {};
 
     paytmParams.body = {
@@ -42,12 +51,12 @@ export default async function handler(req, res) {
     };
 
     //console.log(paytmParams);
-    //console.log("nandan vyas"); 
+    //console.log("nandan vyas");
     const checksum = await PaytmChecksum.generateSignature(
       JSON.stringify(paytmParams.body),
       process.env.PAYTM_MERCHANT_KEY
     );
-    //console.log("nandan vyas"); 
+    //console.log("nandan vyas");
 
     paytmParams.head = {
       signature: checksum,
@@ -71,11 +80,10 @@ export default async function handler(req, res) {
             "Content-Length": post_data.length,
           },
         };
-         
-        
+
         var response = "";
-        var post_req = https.request(options, function(post_res) {
-          post_res.on('data', function (chunk) {
+        var post_req = https.request(options, function (post_res) {
+          post_res.on("data", function (chunk) {
             response += chunk;
           });
 
@@ -86,12 +94,12 @@ export default async function handler(req, res) {
         });
         // console.log(post_req);
         post_req.write(post_data);
-        
+
         post_req.end();
-        
       });
     };
-    let myr = await requestAsync()
-    res.status(200).json(myr)
+    let myr = await requestAsync();
+    res.status(200).json(myr);
   }
 }
+export default connectDB(handler);
