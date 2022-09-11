@@ -17,7 +17,7 @@ const MyOrder = ({ myorder }) => {
 
   const [pmode, setPmode] = useState("Original");
   //PAYMENT TYPE VALUES :  PPI , UPI , CC , DC , NB
-  
+
   useEffect(() => {
     if (pyinfo.PAYMENTMODE == "PPI") {
       setPmode("Paytm Wallet");
@@ -30,15 +30,13 @@ const MyOrder = ({ myorder }) => {
     } else if (pyinfo.PAYMENTMODE == "NB") {
       setPmode("Net Banking");
     }
-
-}, [])
-
+  }, []);
 
   //console.log(pyinfo.PAYMENTMODE, pmode);
 
   //CHANGE THE BELOW FXN TO WITHOUT useState
   const [statusColor, setStatusColor] = useState("text-yellow-600");
-  if (statusColor != "text-green-600" && myorder.status == "Success") {
+  if (statusColor != "text-green-600" && (myorder.status == "Success" || myorder.status == "PAID")) {
     setStatusColor("text-green-600");
   } else if (
     statusColor != "text-red-600" &&
@@ -50,34 +48,33 @@ const MyOrder = ({ myorder }) => {
 
   return (
     <>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="text-gray-600  body-font overflow-hidden dark:bg-gray-900">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <div className="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
+              <h2 className="text-sm title-font text-gray-500 dark:text-gray-300  tracking-widest ">
                 {myorder.createdAt.slice(0, 10)}
               </h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium ">
+              <h1 className="text-gray-900 dark:text-orange-200 text-3xl title-font font-medium ">
                 Order ID: #{myorder.orderID}
               </h1>
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-              Transaction ID:{pyinfo.BANKTXNID}
+              <h2 className="text-sm title-font text-gray-500 dark:text-gray-300  tracking-widest">
+                Transaction ID:{pyinfo.BANKTXNID}
               </h2>
-              <div className="text-base  text-gray-500 mb-4">
-                Payment Status :{" "}
-                <span className={`text-xl font-semibold ${statusColor}`}>
-                  {myorder.status}
+              <div className="text-base  text-gray-500 dark:text-gray-300 mb-4">
+                Delivery Status :{" "}
+                <span className={`text-xl font-normal text-green-700`}>
+                  Feature Coming Soon
                 </span>
               </div>
-              <div className="flex mb-2 ">
-                {/* border-b-2 border-orange-500 */}
-                <a className="flex-grow w-1/2 text-black font-semibold  text-lg px-1">
+              <div className="flex mb-2 border-b-2 border-orange-500 border-opacity-60">
+                <a className="flex-grow w-1/2 text-black dark:text-orange-200 font-semibold  text-lg px-1">
                   Description
                 </a>
-                <a className="flex-grow w-1/4 text-black font-semibold  text-lg px-1">
+                <a className="flex-grow w-1/4 text-black dark:text-orange-200  font-semibold  text-lg px-1">
                   Qty
                 </a>
-                <a className="flex-grow w-1/4 text-right text-black font-semibold  text-lg px-1">
+                <a className="flex-grow w-1/4 text-right text-black dark:text-orange-200 font-semibold  text-lg px-1">
                   Price
                 </a>
               </div>
@@ -85,50 +82,54 @@ const MyOrder = ({ myorder }) => {
                 return (
                   <div
                     key={key}
-                    className="flex border-t border-orange-200 py-2"
+                    className="flex border-b border-orange-200 dark:border-orange-800 dark:border-opacity-40  py-2"
                   >
-                    <span className=" w-1/2  text-gray-500">
+                    <span className=" w-1/2  text-gray-500 dark:text-gray-300 ">
                       {products[key].name}
                     </span>
-                    <span className="w-1/4  text-gray-500">
+                    <span className="w-1/4  text-gray-500 dark:text-gray-300 ">
                       {products[key].qty}
                     </span>
-                    <span className="w-1/4 text-right  text-gray-900">
+                    <span className="w-1/4 text-right  text-gray-900 dark:text-orange-200">
                       ₹ {products[key].price}
                     </span>
                   </div>
                 );
               })}
               <div className="flex ">
-                <a className="flex-grow w-2/3 text-black font-semibold  text-lg px-1 mb-1 mt-4">
+                <a className="flex-grow w-2/3 text-black dark:text-orange-200  font-semibold  text-lg px-1 mb-1 mt-4">
                   Shipping Address
-                  <div className=" text-sm font-normal   ml-1  text-gray-500">
+                  <div className=" text-sm font-normal   ml-1  text-gray-500 dark:text-gray-300 ">
                     <div>{myorder.name}</div>
                     <div>{myorder.phone}</div>
                     <div>{myorder.address}</div>
                     <div>Pin:{myorder.pincode}</div>
                   </div>
                 </a>
-                <a className="flex-grow w-1/2 text-black font-semibold  text-lg px-1 mb-1 mt-4">
-                  Payment Method
-                  <div className="w-1/2 text-sm font-normal  ml-1 text-gray-500">
-                    {pyinfo.BANKNAME} 
+                <a className="flex-grow w-1/2 text-black dark:text-orange-200  font-semibold px-1 mb-1 mt-4">
+                  Payment Info
+                  <div className="font-normal text-sm ml-1 text-gray-500 dark:text-gray-300">
+                    Payment Status :{" "}
+                    <span className={`font-semibold ${statusColor}`}>
+                      {myorder.status}
+                    </span>
+                  </div>
+                  <div className="w-1/2 text-sm font-normal  ml-1 text-gray-500 dark:text-gray-300 ">
+                    {pyinfo.BANKNAME}
                     {/* {pyinfo.GATEWAYNAME} */}
                     <div>{pmode}</div>
                   </div>
-                  
                 </a>
-                
               </div>
-              <div className="flex-grow w-1/2 text-black font-semibold  text-lg px-1  mt-4">
-                  Order Summary
-                  <div className="flex ">
-                <span className="font-medium ml-1  text-gray-500">
-                  SubTotal: ₹ {myorder.amount}
-                </span>
-              </div>
+              <div className="flex-grow w-1/2 text-black dark:text-orange-200  font-semibold  text-lg px-1  mt-4">
+                Order Summary
+                <div className="flex ">
+                  <span className="font-medium ml-1  text-gray-500 dark:text-gray-300 ">
+                    SubTotal: ₹ {myorder.amount}
+                  </span>
                 </div>
-              
+              </div>
+
               <div className="my-6">
                 <Link href={"/"}>
                   <a>
