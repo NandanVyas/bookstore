@@ -115,6 +115,7 @@ function MyApp({ Component, pageProps }) {
         subTotal={subTotal}
       />
       <Component
+      user={user}
         cart={cart}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
