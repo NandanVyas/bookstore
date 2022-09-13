@@ -3,10 +3,12 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Order from "./models/Order";
 import mongoose from "mongoose";
-const MyOrder = ({ myorder }) => {
+const MyOrder = ({ myorder, clearCart }) => {
   // console.log(myorder);
   const products = myorder.products;
   const pyinfo = JSON.parse(myorder.paymentInfo);
+  const router = useRouter();
+
   // console.log(pyinfo);
   // console.log(products);
   // const router=useRouter()
@@ -19,6 +21,11 @@ const MyOrder = ({ myorder }) => {
   //PAYMENT TYPE VALUES :  PPI , UPI , CC , DC , NB
 
   useEffect(() => {
+    let { clearcart } = router.query;
+    if (clearcart == true) {
+      clearCart();
+    }
+
     if (pyinfo.PAYMENTMODE == "PPI") {
       setPmode("Paytm Wallet");
     } else if (pyinfo.PAYMENTMODE == "UPI") {
@@ -36,7 +43,10 @@ const MyOrder = ({ myorder }) => {
 
   //CHANGE THE BELOW FXN TO WITHOUT useState
   const [statusColor, setStatusColor] = useState("text-yellow-600");
-  if (statusColor != "text-green-600" && (myorder.status == "Success" || myorder.status == "PAID")) {
+  if (
+    statusColor != "text-green-600" &&
+    (myorder.status == "Success" || myorder.status == "PAID")
+  ) {
     setStatusColor("text-green-600");
   } else if (
     statusColor != "text-red-600" &&
@@ -52,10 +62,10 @@ const MyOrder = ({ myorder }) => {
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <div className="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-              <h2 className="text-sm title-font text-gray-500 dark:text-gray-300  tracking-widest ">
+              <h2 className="text-sm title-font text-gray-500 dark:text-gray-300 tracking-widest ">
                 {myorder.createdAt.slice(0, 10)}
               </h2>
-              <h1 className="text-gray-900 dark:text-orange-200 text-3xl title-font font-medium ">
+              <h1 className="text-gray-900 dark:text-orange-200 text-2xl md:text-3xl title-font font-medium ">
                 Order ID: #{myorder.orderID}
               </h1>
               <h2 className="text-sm title-font text-gray-500 dark:text-gray-300  tracking-widest">
@@ -63,7 +73,9 @@ const MyOrder = ({ myorder }) => {
               </h2>
               <div className="text-base  text-gray-500 dark:text-gray-300 mb-4">
                 Delivery Status :{" "}
-                <span className={`text-xl font-normal text-green-700`}>
+                <span
+                  className={`text-lg md:text-xl font-normal text-green-700`}
+                >
                   Feature Coming Soon
                 </span>
               </div>
