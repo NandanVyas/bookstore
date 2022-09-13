@@ -18,7 +18,7 @@ const handler = async (req, res) => {
     );
     oid=order._id
   }
-  res.redirect("/order?id=" + oid , 200);
+  res.redirect("/order?id=" + oid +"&clearcart=true" , 200);
 };
 
 export default connectDB(handler);
