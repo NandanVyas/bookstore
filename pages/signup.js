@@ -156,7 +156,7 @@ const Signup = () => {
                 <input
                   value={confirmpassword}
                   onChange={handleChange}
-                  type="confirm-password"
+                  type="password"
                   name="confirmpassword"
                   id="confirmpassword"
                   placeholder="••••••••"
