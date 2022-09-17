@@ -8,7 +8,7 @@ const handler = async (req, res) => {
     const data = jwt.verify(token, process.env.JWT_Key);
     // console.log(data.email)
     const user = await User.findOne({ email: data.email });
-    console.log(user);
+    // console.log(user);
     res.status(200).json({ user });
   } else {
     res.status(400).json({ error: "Error" });
