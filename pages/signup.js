@@ -4,14 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 const Signup = () => {
+  const router=useRouter()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
 
-  const CryptoJS = require("crypto-js");
+  
 
   const handleChange = (e) => {
     if (e.target.name == "name") {
@@ -30,7 +32,7 @@ const Signup = () => {
     const data = {
       name: name,
       email,
-      password: CryptoJS.AES.encrypt(password, "secret123").toString(),
+      password: password,
     };
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addUser`, {
       method: "POST",
@@ -54,6 +56,9 @@ const Signup = () => {
       draggable: true,
       progress: undefined,
     });
+    setTimeout(() => {
+      router.push(process.env.NEXT_PUBLIC_HOST + "/login");
+    }, 3000);
   };
 
   return (
