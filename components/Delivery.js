@@ -55,10 +55,15 @@ const Delivery = ({
 
   return (
     <>
-      <div className="text-xl font-semibold my-4">1.Delivery Details</div>
+      <div className="text-xl font-semibold my-4 dark:text-orange-300">
+        1.Delivery Details
+      </div>
       <div className="flex py-2 w-full sm:flex-row flex-col mx-auto  sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
         <div className="flex-grow w-full">
-          <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="name"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             Full Name
           </label>
           <input
@@ -67,11 +72,14 @@ const Delivery = ({
             type="text"
             id="name"
             name="name"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="w-full bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
         <div className="flex-grow w-full">
-          <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="email"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             Email <span className="text-xs italic">(Cannot be changed)</span>
           </label>
           <input
@@ -80,13 +88,16 @@ const Delivery = ({
             type="email"
             id="email"
             name="email"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
       </div>
       <div className="py-2 w-full">
         <div className="relative">
-          <label htmlFor="address" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="address"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             Address
           </label>
           <textarea
@@ -94,13 +105,16 @@ const Delivery = ({
             onChange={handleChange}
             id="address"
             name="address"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 h-20 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+            className="bg-gray-100 bg-opacity-50 rounded  border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 h-20 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out    sm:text-base block w-full p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           ></textarea>
         </div>
       </div>
       <div className="flex py-2 w-full sm:flex-row flex-col mx-auto  sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
         <div className="flex-grow w-full">
-          <label htmlFor="phone" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="phone"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             Phone
           </label>
           <input
@@ -109,11 +123,14 @@ const Delivery = ({
             type="text"
             id="phone"
             name="phone"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="w-full bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
         <div className="flex-grow w-full">
-          <label htmlFor="pincode" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="pincode"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             Pin Code
           </label>
           <input
@@ -122,13 +139,16 @@ const Delivery = ({
             type="phone"
             id="pincode"
             name="pincode"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="w-full bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
       </div>
       <div className="flex py-2 w-full sm:flex-row flex-col mx-auto  sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
         <div className="flex-grow w-full">
-          <label htmlFor="city" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="city"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             City
           </label>
           <input
@@ -137,11 +157,14 @@ const Delivery = ({
             type="text"
             id="city"
             name="city"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="w-full bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
         <div className="flex-grow w-full">
-          <label htmlFor="state" className="leading-7 text-sm text-gray-600">
+          <label
+            htmlFor="state"
+            className="leading-7 text-sm text-gray-600 dark:text-orange-50"
+          >
             State
           </label>
           <input
@@ -150,7 +173,7 @@ const Delivery = ({
             type="text"
             id="state"
             name="state"
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-transparent focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="w-full bg-gray-50 border border-gray-300 text-gray-900  sm:text-base rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-orange-300 dark:focus:ring-orange-500 dark:focus:border-orange-500"
           />
         </div>
       </div>
