@@ -5,22 +5,63 @@ import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
 import { BsFillCartCheckFill } from "react-icons/Bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
-  const [address, setAddress] = useState("")
-  const [email, setEmail] = useState("")
-  const [name, setName] = useState("")
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [disabled, setDisabled] = useState(true);
-  
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const mytoken = localStorage.getItem("token");
+    if (!mytoken) {
+      router.push("/");
+    } else {
+      // console.log(mytoken);
+      setToken(mytoken);
+      const jwt = require("jsonwebtoken");
+      const data = jwt.verify(mytoken, "secretjwt");
+      // console.log(data);
+
+      setEmail(data.email);
+      setName(data.name);
+      fetchData(mytoken);
+    }
+  }, []);
+
+  const fetchData = async (mytoken) => {
+    // const token = localStorage.getItem("token");
+    let data = { token: mytoken };
+    // console.log(data);
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUserDetails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await a.json();
+    // console.log(res);
+    // console.log("yay")
+    // console.log("Address is ",res.address)
+    setAddress(res.user.address);
+    setCity(res.user.city);
+    setPhone(res.user.phone);
+    setPincode(res.user.pincode);
+    setState(res.user.state);
+  };
 
   const initiatePayment = async () => {
     let oid = Math.floor(Math.random() + Date.now());
 
     //fetch a transaction token
-    const data = { cart, subTotal, oid, email,address,name };
+    const data = { cart, subTotal, oid, email, address, name };
     //console.log(data) working
 
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
@@ -79,7 +120,23 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
       />
 
       <div className=" text-3xl text-center font-bold my-8 ">Checkout</div>
-      <Delivery setDisabled={setDisabled} name={name} setName={setName} phone={phone} setPhone={setPhone} pincode={pincode} setPincode={setPincode} address={address} setAddress={setAddress} email={email} setEmail={setEmail} />
+      <Delivery
+        setDisabled={setDisabled}
+        name={name}
+        setName={setName}
+        phone={phone}
+        setPhone={setPhone}
+        pincode={pincode}
+        setPincode={setPincode}
+        address={address}
+        setAddress={setAddress}
+        email={email}
+        setEmail={setEmail}
+        city={city}
+        setCity={setCity}
+        state={state}
+        setState={setState}
+      />
       <Review
         cart={cart}
         addToCart={addToCart}
