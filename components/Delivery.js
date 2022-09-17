@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Delivery = ({
   setDisabled,
@@ -13,20 +13,22 @@ const Delivery = ({
   setPincode,
   email,
   setEmail,
+  state,
+  setState,
+  city,
+  setCity,
 }) => {
   // const [name, setName] = useState("");
   // const [address, setAddress] = useState("");
   // const [phone, setPhone] = useState("");
   // const [pincode, setPincode] = useState("");
   // const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  // const [city, setCity] = useState("");
+  // const [state, setState] = useState("");
 
   const handleChange = (e) => {
     if (e.target.name == "name") {
       setName(e.target.value);
-    } else if (e.target.name == "email") {
-      setEmail(e.target.value);
     } else if (e.target.name == "address") {
       setAddress(e.target.value);
     } else if (e.target.name == "pincode") {
@@ -70,7 +72,7 @@ const Delivery = ({
         </div>
         <div className="flex-grow w-full">
           <label htmlFor="email" className="leading-7 text-sm text-gray-600">
-            Email
+            Email <span className="text-xs italic">(Cannot be changed)</span>
           </label>
           <input
             value={email}
