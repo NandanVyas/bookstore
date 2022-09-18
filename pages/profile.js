@@ -25,11 +25,9 @@ const Profile = () => {
   const handleChange = (e) => {
     if (e.target.name == "password") {
       setPassword(e.target.value);
-    }
-    else if (e.target.name == "newpassword") {
+    } else if (e.target.name == "newpassword") {
       setNewpassword(e.target.value);
-    }
-     else if (e.target.name == "confirmnewpassword") {
+    } else if (e.target.name == "confirmnewpassword") {
       setConfirmnewpassword(e.target.value);
     }
   };
@@ -120,6 +118,9 @@ const Profile = () => {
     });
     let res = await a.json();
     if (res.success) {
+      setPassword("");
+      setNewpassword("");
+      setConfirmnewpassword("");
       toast.success("Password Updated !!", {
         position: "bottom-center",
         autoClose: 2000,
