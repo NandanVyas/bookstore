@@ -19,7 +19,7 @@ const handler = async (req, res) => {
       
       {
         const jwt = require('jsonwebtoken');
-        var token = jwt.sign({ email: user.email, name: user.name }, 'secretjwt' , { expiresIn: '5d' });
+        var token = jwt.sign({ email: user.email, name: user.name }, process.env.JWT_Key , { expiresIn: '3d' });
         res
           .status(200)
           .json({ success: true, token:token });
