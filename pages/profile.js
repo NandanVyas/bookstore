@@ -1,5 +1,5 @@
 import React from "react";
-import Delivery from "../components/Delivery";
+import Delivery2 from "../components/Delivery2";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -161,7 +161,7 @@ const Profile = () => {
       <div className=" text-3xl text-center font-bold py-8 dark:text-orange-300 ">
         Profile{" "}
       </div>
-      <Delivery
+      <Delivery2
         setDisabled={setDisabled}
         name={name}
         setName={setName}
