@@ -50,7 +50,7 @@ const Login = () => {
         progress: undefined,
       });
       setTimeout(() => {
-        router.replace(process.env.NEXT_PUBLIC_VERCEL_URL);
+        router.push("/");
       }, 3000);
     } else {
       toast.error(response.error, {
