@@ -12,7 +12,7 @@ const handler = async (req, res) => {
         desc: req.body[i].desc,
         img: req.body[i].img,
         author: req.body[i].author,
-        year: req.body[i].year,
+        category: req.body[i].category,
         price: req.body[i].price,
         availableQuantity: req.body[i].availableQuantity,
       });
