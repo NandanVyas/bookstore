@@ -29,7 +29,7 @@ const ForgotPassword = () => {
       password,
       confirmpassword,
     };
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/resetPassword`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/resetPassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const ForgotPassword = () => {
       email,
       sendmail: true,
     };
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/resetPassword`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/resetPassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

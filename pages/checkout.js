@@ -39,7 +39,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     // const token = localStorage.getItem("token");
     let data = { token: mytoken };
     // console.log(data);
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUserDetails`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUserDetails`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     const data = { cart, subTotal, oid, email, address, name };
     //console.log(data) working
 
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/pretransaction`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

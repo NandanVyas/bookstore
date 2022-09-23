@@ -22,11 +22,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var extra = `${process.env.NEXT_PUBLIC_HOST}/api/getUser`;
-    console.log(process.env.NEXT_PUBLIC_HOST);
+    var extra = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUser`;
+    console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
     console.log(extra);
     const data = { email, password };
-    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUser`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const Login = () => {
         progress: undefined,
       });
       setTimeout(() => {
-        router.push(process.env.NEXT_PUBLIC_HOST);
+        router.push(process.env.NEXT_PUBLIC_VERCEL_URL);
       }, 3000);
     } else {
       toast.error(response.error, {

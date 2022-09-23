@@ -47,7 +47,7 @@ const Profile = () => {
     // const token = localStorage.getItem("token");
     let data = { token: mytoken };
     // console.log(data);
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUserDetails`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUserDetails`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const Profile = () => {
       phone: phone,
     };
     let a = await fetch(
-      `${process.env.NEXT_PUBLIC_HOST}/api/updateUserDetails`,
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/updateUserDetails`,
       {
         method: "POST",
         headers: {
@@ -109,7 +109,7 @@ const Profile = () => {
       newpassword: newpassword,
       confirmnewpassword: confirmnewpassword,
     };
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatePassword`, {
+    let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/updatePassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

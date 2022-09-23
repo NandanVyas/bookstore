@@ -34,7 +34,7 @@ const Signup = () => {
       email,
       password: password,
     };
-    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addUser`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/addUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Signup = () => {
       progress: undefined,
     });
     setTimeout(() => {
-      router.push(process.env.NEXT_PUBLIC_HOST + "/login");
+      router.push(process.env.NEXT_PUBLIC_VERCEL_URL + "/login");
     }, 3000);
   };
 

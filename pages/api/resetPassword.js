@@ -32,7 +32,7 @@ const handler = async (req, res) => {
   
       To reset your password, please follow the link below:
       
-      ${process.env.NEXT_PUBLIC_HOST}/forgotPassword?token=${token}
+      ${process.env.NEXT_PUBLIC_VERCEL_URL}/forgotPassword?token=${token}
       
       We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your Profile Page.
   

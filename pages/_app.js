@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }) {
     setTimeout(() => {
       setUser({ value: null });
       setKey(Math.random());
-      router.push(`${process.env.NEXT_PUBLIC_HOST}/login`);
+      router.push(`${process.env.NEXT_PUBLIC_VERCEL_URL}/login`);
     }, 3000);
   };
   const addToCart = (itemCode, qty, price, name, author) => {

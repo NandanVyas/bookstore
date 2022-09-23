@@ -40,7 +40,7 @@ const handler = async (req, res) => {
       mid: process.env.NEXT_PUBLIC_PAYTM_MID,
       websiteName: process.env.NEXT_PUBLIC_WEBSITE,
       orderId: req.body.oid,
-      callbackUrl: `${process.env.NEXT_PUBLIC_HOST}/api/posttransaction`,
+      callbackUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/posttransaction`,
       txnAmount: {
         value: req.body.subTotal,
         currency: "INR",

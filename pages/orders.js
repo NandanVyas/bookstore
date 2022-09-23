@@ -12,7 +12,7 @@ const Orders = () => {
   const router = useRouter;
   useEffect(() => {
     const fetchOrders = async () => {
-      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
+      let a = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/myorders`, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
