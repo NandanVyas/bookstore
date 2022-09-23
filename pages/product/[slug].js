@@ -1,11 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import mongoose from "mongoose";
 import Book from "../models/Book";
+import Image from "next/image";
 
 const Post = ({ addToCart, book }) => {
   const router = useRouter();
   const { slug } = router.query;
-
+  // const src = `${book.img}`;
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -13,7 +15,7 @@ const Post = ({ addToCart, book }) => {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto px-24 object-cover object-center rounded"
+              className="h-[30vh] md:h-[35vh] m-auto  block"
               src={book.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
