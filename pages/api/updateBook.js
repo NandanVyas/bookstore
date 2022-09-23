@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/inBooksion
-import Book from "../models/Book";
+import Book from "../../models/Book";
 import connectDB from "../../middleware/mongoose";
 
 const handler = async (req, res) => {

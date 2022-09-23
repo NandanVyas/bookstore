@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../../models/User";
 import connectDB from "../../middleware/mongoose";
 
 const handler = async (req, res) => {

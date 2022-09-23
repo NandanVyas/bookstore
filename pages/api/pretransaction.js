@@ -1,7 +1,7 @@
 const https = require("https");
 // const PaytmChecksum = require("node_modules/paytmchecksum/PaytmChecksum");
 const PaytmChecksum = require("paytmchecksum");
-import Order from "../models/Order";
+import Order from "../../models/Order";
 import connectDB from "../../middleware/mongoose";
 // const express = require('express')
 // const app = express()

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Link from "next/link";
-import Book from "./models/Book";
+import Book from "../models/Book";
 import mongoose from "mongoose";
 import { capitalize } from "@mui/material";
 

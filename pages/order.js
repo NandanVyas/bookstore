@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Order from "./models/Order";
+import Order from "../models/Order";
 import mongoose from "mongoose";
 const MyOrder = ({ myorder, clearCart }) => {
   // console.log(myorder);

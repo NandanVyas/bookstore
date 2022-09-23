@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import React from "react";
 import connectDB from "../../middleware/mongoose";
-import ForgotPassword from "../models/ForgotPassword";
-import User from "../models/User";
+import ForgotPassword from "../../models/ForgotPassword";
+import User from "../../models/User";
 import jsonwebtoken from "jsonwebtoken";
 const jwt = require("jsonwebtoken");
 

@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import mongoose from "mongoose";
-import Book from "../models/Book";
-import Image from "next/image";
+import Book from "../../models/Book";
 
 const Post = ({ addToCart, book }) => {
   const router = useRouter();

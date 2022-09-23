@@ -1,4 +1,4 @@
-import Order from "../models/Order";
+import Order from "../../models/Order";
 import connectDB from "../../middleware/mongoose";
 const jwt = require('jsonwebtoken');
 

@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import Order from "../models/Order";
+import Order from "../../models/Order";
 import connectDB from "../../middleware/mongoose";
 
 const handler = async (req, res) => {

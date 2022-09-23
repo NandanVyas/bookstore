@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/inBooksion
-import User from "../models/User";
+import User from "../../models/User";
 import connectDB from "../../middleware/mongoose";
 
 const CryptoJS = require("crypto-js");
