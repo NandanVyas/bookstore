@@ -6,8 +6,8 @@ import {
   AiOutlineShoppingCart,
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
-} from "react-icons/Ai";
-import { BsFillCartCheckFill } from "react-icons/Bs";
+} from "react-icons/ai";
+// import { BsFillCartCheckFill } from "react-icons/bs";
 const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
     
   return (

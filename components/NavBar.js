@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {AiOutlineShoppingCart} from 'react-icons/Ai'
+// import {AiOutlineShoppingCart} from 'react-icons/ai'
 import SideBar from './SideBar'
 
 const NavBar = ({logout,user, cart, addToCart,  removeFromCart, clearCart, subTotal}) => {

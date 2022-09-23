@@ -4,7 +4,7 @@ import Review from "../components/Review";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
-import { BsFillCartCheckFill } from "react-icons/Bs";
+import { BsFillCartCheckFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {

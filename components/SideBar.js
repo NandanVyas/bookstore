@@ -8,8 +8,8 @@ import {
   AiOutlineShoppingCart,
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
-} from "react-icons/Ai";
-import { BsFillCartCheckFill } from "react-icons/Bs";
+} from "react-icons/ai";
+import { BsFillCartCheckFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
