@@ -18,12 +18,17 @@ const NavBar = ({
   // console.log(key)
   return (
     <div className="flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md sticky top-0 z-10 bg-white dark:bg-gray-900 dark:shadow-orange-500">
-      <div className="logo mx-5">
-        <Link href="/">
-          <a>
-            <Image src="/N V Bookstore-1.png" alt="" height={45} width={200} />
-          </a>
-        </Link>
+      <div className="mx-5">
+      <Link href={"/"}>
+              <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900 dark:text-orange-600">
+                <Image
+                  src="/N V BookStore-1.png"
+                  alt=""
+                  width={200}
+                  height={40}
+                />
+              </a>
+            </Link>
       </div>
       <div className="nav">
         <ul className="flex items-center space-x-4 font-bold md:text-base dark:text-orange-100">
