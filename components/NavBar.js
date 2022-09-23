@@ -20,7 +20,7 @@ const NavBar = ({
     <div className="flex justify-between flex-col items-center md:flex-row md:justify-start py-1 shadow-md sticky top-0 z-10 bg-white dark:bg-gray-900 dark:shadow-orange-500">
       <div className="mx-5">
       <Link href={"/"}>
-              <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900 dark:text-orange-600">
+              <a>
                 <Image
                   src="/N V BookStore-1.png"
                   alt=""
