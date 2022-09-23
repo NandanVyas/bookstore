@@ -15,10 +15,11 @@ const NavBar = ({logout,user, cart, addToCart,  removeFromCart, clearCart, subTo
         </div>
         <div className='nav'>
             <ul className='flex items-center space-x-4 font-bold md:text-base dark:text-orange-100'>
-                <Link href='/books'><a><li>Books</li></a></Link>
-                <Link href='/'><a><li>Menu2</li></a></Link>
-                <Link href='/'><a><li>Menu3</li></a></Link>
-                <Link href='/'><a><li>Menu4</li></a></Link>
+                <Link href='/cpp'><a><li>C++</li></a></Link>
+                <Link href='/java'><a><li>Java</li></a></Link>
+                <Link href='/python'><a><li>Python</li></a></Link>
+                <Link href='/others'><a><li>Others</li></a></Link>
+                <Link href='/all'><a><li>All</li></a></Link>
             </ul>
         </div>
         {/* key={key} */}
