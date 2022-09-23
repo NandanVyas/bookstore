@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 const Login = () => {
   const router = useRouter();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleChange = (e) => {
     if (e.target.name == "email") {
@@ -22,7 +22,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    var extra = `${process.env.NEXT_PUBLIC_HOST}/api/getUser`;
+    console.log(process.env.NEXT_PUBLIC_HOST);
+    console.log(extra);
     const data = { email, password };
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getUser`, {
       method: "POST",
@@ -37,7 +39,7 @@ const Login = () => {
     setPassword("");
     // setConfirmpassword('')
     if (response.success) {
-      localStorage.setItem("token",response.token)
+      localStorage.setItem("token", response.token);
       toast.success("You are Logged In", {
         position: "bottom-center",
         autoClose: 3000,
@@ -48,7 +50,7 @@ const Login = () => {
         progress: undefined,
       });
       setTimeout(() => {
-        router.push("http://localhost:3000");
+        router.push(process.env.NEXT_PUBLIC_HOST);
       }, 3000);
     } else {
       toast.error(response.error, {
