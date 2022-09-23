@@ -28,7 +28,7 @@ const Orders = () => {
     } else {
       fetchOrders();
     }
-  }, []);
+  }, [router]);
 
   return (
     <div className="dark:bg-gray-900 min-h-[60vh]">

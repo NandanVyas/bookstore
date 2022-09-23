@@ -37,7 +37,7 @@ const MyOrder = ({ myorder, clearCart }) => {
     } else if (pyinfo.PAYMENTMODE == "NB") {
       setPmode("Net Banking");
     }
-  }, []);
+  }, [clearCart, pyinfo.PAYMENTMODE, router.query]);
 
   //console.log(pyinfo.PAYMENTMODE, pmode);
 
