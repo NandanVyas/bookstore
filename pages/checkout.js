@@ -106,55 +106,56 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
       });
   };
   return (
-    <div className="container px-2 sm:m-auto">
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0 maximum-scale=1.0"
+    <div className="dark:bg-gray-900 min-h-[60vh] px-20">
+        
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0 maximum-scale=1.0"
+          />
+        </Head>
+        <Script
+          type="application/javascript"
+          crossorigin="anonymous"
+          src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`}
         />
-      </Head>
-      <Script
-        type="application/javascript"
-        crossorigin="anonymous"
-        src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`}
-      />
+  <div className=" text-3xl text-center font-bold py-8 dark:text-orange-300">Checkout</div>
+        
+        <Delivery
+          setDisabled={setDisabled}
+          name={name}
+          setName={setName}
+          phone={phone}
+          setPhone={setPhone}
+          pincode={pincode}
+          setPincode={setPincode}
+          address={address}
+          setAddress={setAddress}
+          email={email}
+          setEmail={setEmail}
+          city={city}
+          setCity={setCity}
+          state={state}
+          setState={setState}
+        />
+        <Review
+          cart={cart}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          subTotal={subTotal}
+        />
 
-      <div className=" text-3xl text-center font-bold my-8 ">Checkout</div>
-      <Delivery
-        setDisabled={setDisabled}
-        name={name}
-        setName={setName}
-        phone={phone}
-        setPhone={setPhone}
-        pincode={pincode}
-        setPincode={setPincode}
-        address={address}
-        setAddress={setAddress}
-        email={email}
-        setEmail={setEmail}
-        city={city}
-        setCity={setCity}
-        state={state}
-        setState={setState}
-      />
-      <Review
-        cart={cart}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-        subTotal={subTotal}
-      />
-
-      <Link href={"/checkout"}>
-        <button
-          onClick={initiatePayment}
-          disabled={disabled}
-          className="disabled:bg-orange-200 flex mr-4  text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg"
-        >
-          {" "}
-          <BsFillCartCheckFill className="m-1" /> Pay ₹{subTotal}
-        </button>
-      </Link>
-    </div>
+        <Link href={"/checkout"}>
+          <button
+            onClick={initiatePayment}
+            disabled={disabled}
+            className="disabled:bg-orange-200 flex mr-4 mt-5 text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg"
+          >
+            {" "}
+            <BsFillCartCheckFill className="m-1" /> Pay ₹{subTotal}
+          </button>
+        </Link>
+      </div>
   );
 };
 

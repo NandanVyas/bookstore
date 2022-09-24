@@ -9,19 +9,19 @@ const Post = ({ addToCart, book }) => {
   // const src = `${book.img}`;
   return (
     <>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="text-gray-600 body-font overflow-hidden dark:bg-gray-900">
         <div className="container px-5 py-20 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="h-[30vh] md:h-[35vh] m-auto  block"
+              className="h-[30vh] md:h-[35vh] lg:h-[70vh] m-auto block"
               src={book.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
+              <h2 className="text-sm title-font text-gray-500 tracking-widest dark:text-gray-300">
                 {book.author}
               </h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 dark:text-orange-400">
                 {book.title}
               </h1>
               <div className="flex mb-4">
@@ -122,7 +122,7 @@ const Post = ({ addToCart, book }) => {
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">{book.desc}</p>
+              <p className="leading-relaxed dark:text-gray-300">{book.desc}</p>
               {/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
@@ -156,7 +156,7 @@ const Post = ({ addToCart, book }) => {
                 </div>
               </div> */}
               <div className="flex mt-14">
-                <span className="title-font font-medium text-2xl text-gray-900">
+                <span className="title-font font-medium text-2xl text-gray-900 dark:text-orange-400">
                   ₹ {book.price}
                 </span>
                 <button
@@ -169,7 +169,7 @@ const Post = ({ addToCart, book }) => {
                       book.author
                     );
                   }}
-                  className="flex ml-auto mr-16 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded"
+                  className="flex ml-auto mr-16 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded "
                 >
                   Add to Cart
                 </button>
