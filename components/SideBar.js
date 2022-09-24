@@ -101,7 +101,7 @@ const SideBar = ({
       <div
         ref={ref}
         className={`sidebar w-72 h-[100vh]  absolute top-0 right-0 bg-orange-100 dark:bg-orange-600  px-6 py-10 transform transition-transform ${
-          Object.keys(cart).length === 0 ? "translate-x-full" : "translate-x-0"
+          Object.keys(cart).length === 0 ? "translate-x-full hidden" : "translate-x-0"
         }`}
         // overflow-y-scroll
       >
