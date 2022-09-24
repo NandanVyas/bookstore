@@ -28,10 +28,11 @@ const SideBar = ({
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
+      ref.current.classList.remove("hidden");
       ref.current.classList.add("translate-x-0");
-    } else if (!ref.current.classList.contains("translate-x-full")) {
+    } else if (ref.current.classList.contains("translate-x-0")) {
       ref.current.classList.remove("translate-x-0");
-      ref.current.classList.add("translate-x-full");
+      ref.current.classList.add("translate-x-full","hidden");
     }
   };
   const ref = useRef();
@@ -100,7 +101,7 @@ const SideBar = ({
       <div
         ref={ref}
         className={`sidebar w-72 h-[100vh]  absolute top-0 right-0 bg-orange-100 dark:bg-orange-600  px-6 py-10 transform transition-transform ${
-          Object.keys(cart).length === 0 ? "translate-x-full" : "translate-x-0"
+          Object.keys(cart).length === 0 ? "translate-x-full hidden" : "translate-x-0"
         }`}
         // overflow-y-scroll
       >

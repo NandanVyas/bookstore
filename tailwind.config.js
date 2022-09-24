@@ -7,5 +7,14 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-typewriter')({
+        wordsets: {
+            bookstore: {
+                words: ['Welcome to the bookstore', 'Created by Nandan Vyas'],
+                delay: 3
+            }
+        }
+    })
+],
 }

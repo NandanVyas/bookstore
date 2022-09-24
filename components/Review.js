@@ -12,14 +12,14 @@ const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
     
   return (
     <>
-      <div className="text-xl font-semibold mt-11 ">2.Review Cart Items</div>
+      <div className="text-xl font-semibold mt-11 dark:text-orange-300">2.Review Cart Items</div>
       <div>
         
-        <div className="sidebar  text-base px-2 py-2 m-2 ">
+        <div className="text-base px-2 py-2 m-2 ">
           
-          <ol className="list-decimal font-semibold">
+          <ol className="list-decimal font-semibold dark:text-gray-300">
             {Object.keys(cart).length == 0 && (
-              <div className="my-4 font-semibold">
+              <div className="my-4 font-semibold dark:text-gray-300">
                 No Items present in the cart
               </div>
             )}
@@ -27,8 +27,8 @@ const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
               return (
                 <li key={k}>
                   <div className="item flex my-5">
-                    <div className="font-semibold w-1/2">{cart[k].name}</div>
-                    <div className="font-semibold flex items-center justify-center w-1/3 text-lg">
+                    <div className="font-semibold w-1/2 dark:text-gray-300">{cart[k].name}</div>
+                    <div className="font-semibold flex items-center justify-center w-1/3 text-lg dark:text-gray-300">
                       <AiOutlineMinusCircle
                         onClick={() => {
                           removeFromCart(
@@ -61,7 +61,7 @@ const Review = ({cart, addToCart, removeFromCart,  subTotal}) => {
             })}
           </ol>
         
-          <div className="font-bold" >SubTotal: ₹{subTotal}</div>
+          <div className="font-bold dark:text-orange-100" >SubTotal: ₹{subTotal}</div>
           </div>
         </div>
       
