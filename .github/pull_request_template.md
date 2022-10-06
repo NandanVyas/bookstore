@@ -11,5 +11,5 @@
   - [ ] A short summary of your changes
   - [ ] A link to the issue that relates to these changes
   - [ ] A screenshot of the changes if possible!
-- [ ] Add `brittanyjoiner15` as a reviewer
+- [ ] Add `NandanVyas` as a reviewer
 - [ ] Add yourself as assignee
