@@ -49,7 +49,7 @@ const Home = ({ faqs }) => {
       </div>
 
       <Mid />
-      <div className="dark:bg-gray-900 px-20">
+      <div className="dark:bg-gray-900 px-5 md:px-10 lg:px-20">
         <div className="sm:text-3xl text-2xl font-medium title-font text-gray-900 dark:text-orange-300 text-center my-10">
           Frequently Asked Questions
         </div>
