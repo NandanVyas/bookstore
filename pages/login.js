@@ -23,8 +23,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     var extra = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUser`;
-    console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
-    console.log(extra);
+    //console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
+    //console.log(extra);
     const data = { email, password };
     let res = await fetch(`api/getUser`, {
       method: "POST",
