@@ -56,6 +56,8 @@ const ForgotPassword = () => {
     let res = await a.json();
     if (res.success) {
       console.log("EMAIL SENT");
+      console.log("Copy this and add ?token=<>")
+      console.log(res.token);
     }
   };
 

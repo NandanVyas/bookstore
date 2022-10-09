@@ -37,7 +37,7 @@ const handler = async (req, res) => {
       We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your Profile Page.
   
       Nandan Vyas`;
-        res.status(200).json({ success: true, msg: "Email Sent" });
+        res.status(200).json({ success: true, msg: "Email Sent" ,token:token});
       } else {
         res.status(400).json({ success: "false", error: "Email not found" });
       }
