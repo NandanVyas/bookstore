@@ -62,19 +62,28 @@ const Home = ({ faqs }) => {
               <h2>
                 <button
                   onClick={() => {
-                    if(visible==false)
-                    setVisible(true);
-                    else
-                    setVisible(false);
-
+                    if (visible == false) setVisible(true);
+                    else setVisible(false);
                   }}
                   type="button"
                   className="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
-                  <span className="w-fit">{item.question}?    {item.name!="anonymous" && item.name!=="Anonymous" && <span className="text-xs w-fit text-left text-gray-500 dark:text-gray-500"> &nbsp; &nbsp; By : {item.name}</span>}</span>
-                  
+                  <span className="w-fit">
+                    {item.question}?{" "}
+                    {item.name != "anonymous" && item.name !== "Anonymous" && (
+                      <span className="text-xs w-fit text-left text-gray-500 dark:text-gray-500">
+                        {" "}
+                        &nbsp; &nbsp; By : {item.name}
+                      </span>
+                    )}
+                  </span>
+
                   <svg
-                    className="w-6 h-6 rotate-180 shrink-0"
+                    className={
+                      visible === true
+                        ? "w-6 h-6 rotate-180 shrink-0"
+                        : "w-6 h-6 shrink-0"
+                    }
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
