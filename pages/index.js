@@ -2,18 +2,36 @@ import mongoose from "mongoose";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Mid from "../components/Mid";
 import FAQ from "../models/FAQ";
+import { useRouter } from "next/router";
 
 const Home = ({ faqs }) => {
+  const [userLoggedIn, setUserLoggedIn] = useState(null);
+  const router = useRouter();
+
   useEffect(() => {
     const mytoken = localStorage.getItem("token");
+    setUserLoggedIn(mytoken);
     console.log("Token = ", mytoken);
   }, []);
 
   const clickHandlerFAQ = () => {};
   console.log(faqs);
+
+  const askQueryButtonClicked = (userLoggedIn) => {
+    console.log("Ask Ques Tapped : ", userLoggedIn);
+
+    if (userLoggedIn != null) {
+      console.log("Inside Me");
+      router.push("/addFaqPage");
+    } else {
+      console.log("Current Value: ", userLoggedIn);
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="dark:bg-gray-900">
       <Head>
@@ -124,13 +142,18 @@ const Home = ({ faqs }) => {
         })}
 
         <div className="flex flex-col items-center justify-center">
-          <Link href={"/addFaqPage"}>
-            <button className=" relative font-semibold">
-              <div className="relative bg-orange-600 text-gray-50 border border-gray-500 rounded-lg text-center mb-4 mt-8 py-4 px-8 focus:outline-none hover:bg-orange-500">
-                New Query? Ask Here!
-              </div>
-            </button>
-          </Link>
+          {/* <Link href={"/addFaqPage"}> */}
+          <button
+            className=" relative font-semibold"
+            onClick={() => {
+              askQueryButtonClicked(userLoggedIn);
+            }}
+          >
+            <div className="relative bg-orange-600 text-gray-50 border border-gray-500 rounded-lg text-center mb-4 mt-8 py-4 px-8 focus:outline-none hover:bg-orange-500">
+              New Query? Ask Here!
+            </div>
+          </button>
+          {/* </Link> */}
         </div>
       </div>
     </div>

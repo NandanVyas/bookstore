@@ -1,7 +1,48 @@
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
-import React from "react";
 
-const addFaqPage = () => {
+const AddFaqPage = () => {
+  //   const router = useRouter();
+  //   const token = router.query.token;
+  const [question, setQuestion] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleChange = (e) => {
+    console.log(e.target.name);
+    if (e.target.name == "question") {
+      console.log(question);
+      setQuestion(e.target.value);
+    } else if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "email") {
+      //   console.log(email);
+      setEmail(e.target.value);
+    }
+  };
+
+  const sendQueryButtonPressed = async () => {
+    let data = {
+      question: question,
+      //   token: router.query.token,
+      name: name,
+      //   email: email,
+      answer: "",
+    };
+    let a = await fetch(`api/addFAQ`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await a.json();
+    if (res.success) {
+      console.log("Data Sent To DB");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-start bg-white dark:bg-gray-900">
       <div className="mx-auto w-full max-w-lg">
@@ -18,6 +59,8 @@ const addFaqPage = () => {
             <input
               type="text"
               name="name"
+              value={name}
+              onChange={handleChange}
               className="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 dark:text-orange-300 focus:border-orange-600 focus:outline-none focus:ring-0"
               placeholder=""
             />
@@ -29,6 +72,8 @@ const addFaqPage = () => {
             <input
               type="text"
               name="email"
+              value={email}
+              onChange={handleChange}
               className="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 dark:text-orange-300 focus:border-orange-600 focus:outline-none focus:ring-0"
               placeholder=" "
             />
@@ -38,8 +83,11 @@ const addFaqPage = () => {
           </div>
           <div className="relative z-0 col-span-2">
             <textarea
-              name="message"
+              name="question"
               rows="5"
+              value={question}
+              onChange={handleChange}
+              id="question"
               className="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 dark:text-orange-300 focus:border-orange-600 focus:outline-none focus:ring-0"
               placeholder=" "
             ></textarea>
@@ -51,6 +99,7 @@ const addFaqPage = () => {
         <div className="flex flex-row">
           <button
             type="submit"
+            onClick={sendQueryButtonPressed}
             className="flex mr-4 mt-5 text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg"
           >
             Send Query
@@ -66,4 +115,4 @@ const addFaqPage = () => {
   );
 };
 
-export default addFaqPage;
+export default AddFaqPage;
