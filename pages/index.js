@@ -1,13 +1,37 @@
 import mongoose from "mongoose";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
 import Mid from "../components/Mid";
 import FAQ from "../models/FAQ";
+import { useRouter } from "next/router";
 
 const Home = ({ faqs }) => {
+  const [userLoggedIn, setUserLoggedIn] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const mytoken = localStorage.getItem("token");
+    setUserLoggedIn(mytoken);
+    console.log("Token = ", mytoken);
+  }, []);
+
   const clickHandlerFAQ = () => {};
   console.log(faqs);
+
+  const askQueryButtonClicked = (userLoggedIn) => {
+    console.log("Ask Ques Tapped : ", userLoggedIn);
+
+    if (userLoggedIn != null) {
+      console.log("Inside Me");
+      router.push("/addFaqPage");
+    } else {
+      console.log("Current Value: ", userLoggedIn);
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="dark:bg-gray-900">
       <Head>
@@ -50,9 +74,17 @@ const Home = ({ faqs }) => {
 
       <Mid />
       <div className="dark:bg-gray-900 px-5 md:px-10 lg:px-20">
-        <div className="sm:text-3xl text-2xl font-medium title-font text-gray-900 dark:text-orange-300 text-center my-10">
+        <div className="sm:text-3xl text-2xl font-medium title-font text-gray-900 dark:text-orange-300 text-center my-4">
           Frequently Asked Questions
         </div>
+        {/* <div className="sm:text-2xl text-1xl font-medium title-font bg-orange-500 text-gray-900 dark:text-orange-300 text-center my-10">
+          <a
+            href={"/addFaqPage"}
+            className=" hover:text-gray-800 dark:hover:text-orange-800"
+          >
+            Cant find your question ? Ask here.
+          </a>
+        </div> */}
 
         {faqs.map((item) => {
           // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -108,6 +140,21 @@ const Home = ({ faqs }) => {
             </div>
           );
         })}
+
+        <div className="flex flex-col items-center justify-center">
+          {/* <Link href={"/addFaqPage"}> */}
+          <button
+            className=" relative font-semibold"
+            onClick={() => {
+              askQueryButtonClicked(userLoggedIn);
+            }}
+          >
+            <div className="relative bg-orange-600 text-gray-50 border border-gray-500 rounded-lg text-center mb-4 mt-8 py-4 px-8 focus:outline-none hover:bg-orange-500">
+              New Query? Ask Here!
+            </div>
+          </button>
+          {/* </Link> */}
+        </div>
       </div>
     </div>
   );
@@ -116,7 +163,10 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let faqs = await FAQ.find();
+  let faqs = await FAQ.find({
+    question: { $exists: true },
+    answer: { $ne: "" },
+  });
   console.log(faqs);
   return {
     props: { faqs: JSON.parse(JSON.stringify(faqs)) }, // will be passed to the page component as props
