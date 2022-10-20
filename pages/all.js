@@ -16,7 +16,7 @@ const All = ({ books }) => {
             {books.map((item) => {
               return (
                 <Link passHref={true} key={item._id} href={`/product/${item.slug}`}>
-                  <div className="lg:w-1/4 md:w-1/2 p-10 w-full cursor-pointer shadow-lg hover:scale-125 hover:bg-white dark:hover:bg-gray-700 dark:bg-gray-900 dark:shadow-orange-600 duration-500">
+                  <div className="lg:w-1/4 md:w-1/2 p-10 w-full cursor-pointer shadow-lg hover:scale-110 hover:bg-white dark:hover:bg-gray-700 dark:bg-gray-900 dark:shadow-orange-600 duration-500">
                     <a className="block relative rounded overflow-hidden">
                       <img
                         alt="ecommerce"
