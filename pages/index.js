@@ -149,8 +149,8 @@ const Home = ({ faqs }) => {
               askQueryButtonClicked(userLoggedIn);
             }}
           >
-            <div className="relative bg-orange-600 text-gray-50 border border-gray-500 rounded-lg text-center mb-4 mt-8 py-4 px-8 focus:outline-none hover:bg-orange-500">
-              New Query? Ask Here!
+            <div className={"relative bg-orange-600 text-gray-50 border border-gray-500 rounded-lg text-center mb-4 mt-8 py-4 px-8 focus:outline-none hover:bg-orange-500 "}>
+            {userLoggedIn?"New Query? Ask Here!":"Login to Ask Your Question/Query "} 
             </div>
           </button>
           {/* </Link> */}
