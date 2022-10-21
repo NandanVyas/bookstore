@@ -11,11 +11,13 @@ const Java = ({ books }) => {
     <div>
       <section className="text-gray-600 body-font dark:bg-gray-900">
         <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap -m-4 justify-center space-y-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {books.map((item) => {
               return (
                 <Link passHref={true} key={item._id} href={`/product/${item.slug}`}>
-                  <div className="lg:w-1/4 md:w-1/2 p-10 w-full cursor-pointer shadow-lg hover:scale-125 hover:bg-white dark:hover:bg-gray-700 dark:bg-gray-900 dark:shadow-orange-600 duration-500">
+                  <div className="cursor-pointer 
+                 shadow-lg
+                 hover:scale-125 hover:bg-white dark:hover:bg-gray-700 dark:bg-gray-900 dark:shadow-orange-600 duration-500 rounded-lg p-4">
                     <a className="block relative rounded overflow-hidden">
                       <img
                         alt="ecommerce"
