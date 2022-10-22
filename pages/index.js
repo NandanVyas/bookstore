@@ -101,7 +101,7 @@ const Home = ({ faqs }) => {
                     else setVisible(false);
                   }}
                   type="button"
-                  className="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 rounded-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white mt-4"
                 >
                   <span className="w-fit">
                     {item.question}?{" "}
