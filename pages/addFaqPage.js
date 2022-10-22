@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
 
-const AddFaqPage = () => {
+const AddFaqPage = (props) => {
     const [question, setQuestion] = useState("");
     const [name, setName] = useState("");
     const [token, setToken] = useState("");
@@ -71,7 +71,7 @@ const AddFaqPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-start bg-white dark:bg-gray-900">
+        <div className="flex items-center justify-start bg-white dark:bg-gray-900 py-20">
             <div className="mx-auto w-full max-w-lg">
                 <h1 className="text-3xl font-medium dark:text-orange-400 ">
                     Add Your Question
@@ -106,12 +106,12 @@ const AddFaqPage = () => {
                     >
                         Send Query
                     </button>
-                    <Link href={"/"} className="r-0">
+                    {/* <Link href={"/"} className="r-0"> */}
                         <button
-                            className="flex mr-4 mt-5 text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg">
+                            className="flex mr-4 mt-5 text-white bg-orange-500 border-0 py-2 px-2 focus:outline-none hover:bg-orange-600 rounded text-lg" onClick={props.cancelHandler}>
                             Cancel
                         </button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
             </div>
         </div>

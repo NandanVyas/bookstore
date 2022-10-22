@@ -6,28 +6,32 @@ import { useEffect, useState, useRef } from "react";
 import Mid from "../components/Mid";
 import FAQ from "../models/FAQ";
 import { useRouter } from "next/router";
+import AddFaqPage from "./addFaqPage";
 
 const Home = ({ faqs }) => {
   const [userLoggedIn, setUserLoggedIn] = useState(null);
+  const [queryModelVisible,setQueryModelVisible] = useState(false);
+  // const [animate,setAnimate] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const mytoken = localStorage.getItem("token");
     setUserLoggedIn(mytoken);
-    console.log("Token = ", mytoken);
   }, []);
 
   const clickHandlerFAQ = () => {};
   console.log(faqs);
 
   const askQueryButtonClicked = (userLoggedIn) => {
-    console.log("Ask Ques Tapped : ", userLoggedIn);
-
     if (userLoggedIn != null) {
-      console.log("Inside Me");
-      router.push("/addFaqPage");
+      if(!queryModelVisible){ 
+        // setAnimate(true);
+        setQueryModelVisible(true);
+      }
+      else
+      setQueryModelVisible(false);
+      // router.push("/addFaqPage");
     } else {
-      console.log("Current Value: ", userLoggedIn);
       router.push("/login");
     }
   };
@@ -42,7 +46,6 @@ const Home = ({ faqs }) => {
           sizes="180x180"
           href="/apple-touch-icon.png"
         />
-
         <link
           rel="icon"
           type="image/png"
@@ -155,6 +158,11 @@ const Home = ({ faqs }) => {
           </button>
           {/* </Link> */}
         </div>
+          {/* <div className={"transition-all duration-150 ease-out "+(animate?"animate-scalein":"animate-scaleout")}> */}
+        {queryModelVisible &&
+            <AddFaqPage cancelHandler={askQueryButtonClicked}/>
+          }
+          {/* </div> */}
       </div>
     </div>
   );
