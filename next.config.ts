@@ -11,7 +11,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Vercel injects a Next build adapter and does not use the standalone bundle.
+  // Next 16.3 currently omits the root NFT traces when that adapter is active,
+  // so keep standalone output for Docker/self-hosting only.
+  output: process.env.VERCEL ? undefined : "standalone",
   poweredByHeader: false,
   images: {
     remotePatterns: [
