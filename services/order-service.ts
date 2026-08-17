@@ -1,11 +1,11 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
-import { connectDB } from "@/lib/db";
 import { ApiError } from "@/lib/http";
 import { calculateShipping } from "@/lib/cart";
 import BookModel from "@/models/Book";
 import CartModel from "@/models/Cart";
 import OrderModel from "@/models/Order";
+import { prepareBookDatabase } from "@/services/book-compatibility";
 import type { Order, OrderItem, ShippingAddress } from "@/types";
 
 type OrderInput = { bookId: string; quantity: number }[];
@@ -66,7 +66,7 @@ export async function createDemoOrder(
   input: OrderInput,
   shippingAddress: ShippingAddress,
 ): Promise<Order> {
-  await connectDB();
+  await prepareBookDatabase();
   const ids = input.map((item) => item.bookId);
   const books = await BookModel.find({ _id: { $in: ids }, isActive: true }).lean();
   if (books.length !== new Set(ids).size) {
@@ -133,20 +133,20 @@ export async function createDemoOrder(
 }
 
 export async function listOrders(userId: string, all = false): Promise<Order[]> {
-  await connectDB();
+  await prepareBookDatabase();
   const records = await OrderModel.find(all ? {} : { userId }).sort({ createdAt: -1 }).lean();
   return (records as unknown as LeanOrder[]).map(toOrder);
 }
 
 export async function getOrder(id: string, userId: string, admin = false): Promise<Order> {
-  await connectDB();
+  await prepareBookDatabase();
   const record = await OrderModel.findOne(admin ? { _id: id } : { _id: id, userId }).lean();
   if (!record) throw new ApiError(404, "ORDER_NOT_FOUND", "Order not found.");
   return toOrder(record as unknown as LeanOrder);
 }
 
 export async function setOrderStatus(id: string, status: Order["status"]): Promise<Order> {
-  await connectDB();
+  await prepareBookDatabase();
   const record = await OrderModel.findByIdAndUpdate(id, { status }, { new: true, runValidators: true }).lean();
   if (!record) throw new ApiError(404, "ORDER_NOT_FOUND", "Order not found.");
   return toOrder(record as unknown as LeanOrder);

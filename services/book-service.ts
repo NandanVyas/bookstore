@@ -1,9 +1,9 @@
 import "server-only";
 import { cache } from "react";
 import type { SortOrder } from "mongoose";
-import { connectDB } from "@/lib/db";
 import { ApiError } from "@/lib/http";
 import BookModel from "@/models/Book";
+import { prepareBookDatabase } from "@/services/book-compatibility";
 import type { Book } from "@/types";
 
 type BookQuery = {
@@ -22,11 +22,14 @@ type LeanBook = {
   title: string;
   author: string;
   slug: string;
-  description: string;
+  description?: string;
+  desc?: string;
   price: number;
   category: string;
-  stock: number;
+  stock?: number;
+  availableQuantity?: number;
   coverUrl?: string;
+  img?: string;
   isbn?: string;
   publisher?: string;
   language?: string;
@@ -41,11 +44,11 @@ export function toBook(book: LeanBook): Book {
     title: book.title,
     author: book.author,
     slug: book.slug,
-    description: book.description,
+    description: book.description ?? book.desc ?? "",
     price: book.price,
     category: book.category,
-    stock: book.stock,
-    coverUrl: book.coverUrl ?? "",
+    stock: book.stock ?? book.availableQuantity ?? 0,
+    coverUrl: book.coverUrl ?? book.img ?? "",
     isbn: book.isbn || undefined,
     publisher: book.publisher || undefined,
     language: book.language || undefined,
@@ -58,7 +61,7 @@ export function toBook(book: LeanBook): Book {
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function listBooks(query: BookQuery): Promise<{ books: Book[]; categories: string[] }> {
-  await connectDB();
+  await prepareBookDatabase();
   const filter: {
     isActive: boolean;
     $or?: Array<{ title?: RegExp; author?: RegExp; isbn?: RegExp }>;
@@ -97,19 +100,19 @@ export async function listBooks(query: BookQuery): Promise<{ books: Book[]; cate
 }
 
 export async function getFeaturedBooks(limit = 4): Promise<Book[]> {
-  await connectDB();
+  await prepareBookDatabase();
   const records = await BookModel.find({ isActive: true }).sort({ featured: -1, createdAt: -1 }).limit(limit).lean();
   return (records as unknown as LeanBook[]).map(toBook);
 }
 
 export const getBookBySlug = cache(async (slug: string): Promise<Book | null> => {
-  await connectDB();
+  await prepareBookDatabase();
   const record = await BookModel.findOne({ slug, isActive: true }).lean();
   return record ? toBook(record as unknown as LeanBook) : null;
 });
 
 export async function createBook(input: Record<string, unknown>): Promise<Book> {
-  await connectDB();
+  await prepareBookDatabase();
   try {
     const record = await BookModel.create(input);
     return toBook(record.toObject() as unknown as LeanBook);
@@ -122,14 +125,14 @@ export async function createBook(input: Record<string, unknown>): Promise<Book> 
 }
 
 export async function updateBook(id: string, input: Record<string, unknown>): Promise<Book> {
-  await connectDB();
+  await prepareBookDatabase();
   const record = await BookModel.findByIdAndUpdate(id, input, { new: true, runValidators: true });
   if (!record) throw new ApiError(404, "BOOK_NOT_FOUND", "Book not found.");
   return toBook(record.toObject() as unknown as LeanBook);
 }
 
 export async function archiveBook(id: string): Promise<void> {
-  await connectDB();
+  await prepareBookDatabase();
   const result = await BookModel.updateOne({ _id: id }, { isActive: false });
   if (!result.matchedCount) throw new ApiError(404, "BOOK_NOT_FOUND", "Book not found.");
 }

@@ -5,7 +5,7 @@
   "private": true,
   "description": "A modern full-stack bookstore built with Next.js, TypeScript, and MongoDB.",
   "engines": {
-    "node": ">=20.9.0"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev",
