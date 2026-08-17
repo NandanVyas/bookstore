@@ -1,13 +1,13 @@
 import "server-only";
+import { connectDB } from "@/lib/db";
 import CartModel from "@/models/Cart";
 import BookModel from "@/models/Book";
-import { prepareBookDatabase } from "@/services/book-compatibility";
 import type { CartItem } from "@/types";
 
 type CartInput = { bookId: string; quantity: number }[];
 
 export async function saveCart(userId: string, items: CartInput): Promise<CartItem[]> {
-  await prepareBookDatabase();
+  await connectDB();
   const uniqueItems = Array.from(
     new Map(items.map((item) => [item.bookId, item])).values(),
   );
@@ -20,7 +20,7 @@ export async function saveCart(userId: string, items: CartInput): Promise<CartIt
 }
 
 export async function mergeCart(userId: string, incoming: CartInput): Promise<CartItem[]> {
-  await prepareBookDatabase();
+  await connectDB();
   const existing = await CartModel.findOne({ userId }).lean();
   const quantities = new Map<string, number>();
   const existingItems = (existing?.items ?? []) as Array<{ bookId: { toString(): string }; quantity: number }>;
@@ -37,7 +37,7 @@ export async function mergeCart(userId: string, incoming: CartInput): Promise<Ca
 }
 
 export async function getCart(userId: string): Promise<CartItem[]> {
-  await prepareBookDatabase();
+  await connectDB();
   const cart = await CartModel.findOne({ userId }).lean();
   const storedItems = (cart?.items ?? []) as Array<{ bookId: { toString(): string }; quantity: number }>;
   return hydrateCart(
@@ -52,17 +52,21 @@ async function hydrateCart(items: CartInput): Promise<CartItem[]> {
   if (!items.length) return [];
   const books = await BookModel.find({
     _id: { $in: items.map((item) => item.bookId) },
-    isActive: true,
+    isActive: { $ne: false },
   }).lean();
   const quantities = new Map(items.map((item) => [item.bookId, item.quantity]));
-  return books.map((book) => ({
-    bookId: book._id.toString(),
-    slug: book.slug,
-    title: book.title,
-    author: book.author,
-    coverUrl: book.coverUrl ?? "",
-    price: book.price,
-    stock: book.stock,
-    quantity: Math.max(1, Math.min(quantities.get(book._id.toString()) ?? 1, book.stock || 1, 10)),
-  }));
+  return books.map((record) => {
+    const book = record as typeof record & { img?: string; availableQuantity?: number };
+    const stock = book.stock ?? book.availableQuantity ?? 0;
+    return {
+      bookId: book._id.toString(),
+      slug: book.slug,
+      title: book.title,
+      author: book.author,
+      coverUrl: book.coverUrl ?? book.img ?? "",
+      price: book.price,
+      stock,
+      quantity: Math.max(1, Math.min(quantities.get(book._id.toString()) ?? 1, stock || 1, 10)),
+    };
+  });
 }

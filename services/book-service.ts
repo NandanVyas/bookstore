@@ -1,9 +1,9 @@
 import "server-only";
 import { cache } from "react";
 import type { SortOrder } from "mongoose";
+import { connectDB } from "@/lib/db";
 import { ApiError } from "@/lib/http";
 import BookModel from "@/models/Book";
-import { prepareBookDatabase } from "@/services/book-compatibility";
 import type { Book } from "@/types";
 
 type BookQuery = {
@@ -61,21 +61,33 @@ export function toBook(book: LeanBook): Book {
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function listBooks(query: BookQuery): Promise<{ books: Book[]; categories: string[] }> {
-  await prepareBookDatabase();
+  await connectDB();
   const filter: {
-    isActive: boolean;
+    isActive: { $ne: boolean };
     $or?: Array<{ title?: RegExp; author?: RegExp; isbn?: RegExp }>;
+    $and?: Array<{
+      $or: Array<{
+        stock?: { $gt?: number; $exists?: boolean };
+        availableQuantity?: { $gt: number };
+      }>;
+    }>;
     category?: RegExp;
-    stock?: { $gt: number };
     price?: { $gte?: number; $lte?: number };
-  } = { isActive: true };
+  } = { isActive: { $ne: false } };
   const search = query.q || query.title;
   if (search) {
     const regex = new RegExp(escapeRegex(search), "i");
     filter.$or = [{ title: regex }, { author: regex }, { isbn: regex }];
   }
   if (query.category) filter.category = new RegExp(`^${escapeRegex(query.category)}$`, "i");
-  if (query.availability === "in-stock") filter.stock = { $gt: 0 };
+  if (query.availability === "in-stock") {
+    filter.$and = [{
+      $or: [
+        { stock: { $gt: 0 } },
+        { stock: { $exists: false }, availableQuantity: { $gt: 0 } },
+      ],
+    }];
+  }
   if (query.minPrice !== undefined || query.maxPrice !== undefined) {
     filter.price = {};
     if (query.minPrice !== undefined) filter.price.$gte = query.minPrice;
@@ -91,7 +103,7 @@ export async function listBooks(query: BookQuery): Promise<{ books: Book[]; cate
 
   const [records, categories] = await Promise.all([
     BookModel.find(filter).sort(sorts[query.sort]).limit(query.limit).lean(),
-    BookModel.distinct("category", { isActive: true }),
+    BookModel.distinct("category", { isActive: { $ne: false } }),
   ]);
   return {
     books: (records as unknown as LeanBook[]).map(toBook),
@@ -100,19 +112,19 @@ export async function listBooks(query: BookQuery): Promise<{ books: Book[]; cate
 }
 
 export async function getFeaturedBooks(limit = 4): Promise<Book[]> {
-  await prepareBookDatabase();
-  const records = await BookModel.find({ isActive: true }).sort({ featured: -1, createdAt: -1 }).limit(limit).lean();
+  await connectDB();
+  const records = await BookModel.find({ isActive: { $ne: false } }).sort({ featured: -1, createdAt: -1 }).limit(limit).lean();
   return (records as unknown as LeanBook[]).map(toBook);
 }
 
 export const getBookBySlug = cache(async (slug: string): Promise<Book | null> => {
-  await prepareBookDatabase();
-  const record = await BookModel.findOne({ slug, isActive: true }).lean();
+  await connectDB();
+  const record = await BookModel.findOne({ slug, isActive: { $ne: false } }).lean();
   return record ? toBook(record as unknown as LeanBook) : null;
 });
 
 export async function createBook(input: Record<string, unknown>): Promise<Book> {
-  await prepareBookDatabase();
+  await connectDB();
   try {
     const record = await BookModel.create(input);
     return toBook(record.toObject() as unknown as LeanBook);
@@ -125,14 +137,14 @@ export async function createBook(input: Record<string, unknown>): Promise<Book> 
 }
 
 export async function updateBook(id: string, input: Record<string, unknown>): Promise<Book> {
-  await prepareBookDatabase();
+  await connectDB();
   const record = await BookModel.findByIdAndUpdate(id, input, { new: true, runValidators: true });
   if (!record) throw new ApiError(404, "BOOK_NOT_FOUND", "Book not found.");
   return toBook(record.toObject() as unknown as LeanBook);
 }
 
 export async function archiveBook(id: string): Promise<void> {
-  await prepareBookDatabase();
+  await connectDB();
   const result = await BookModel.updateOne({ _id: id }, { isActive: false });
   if (!result.matchedCount) throw new ApiError(404, "BOOK_NOT_FOUND", "Book not found.");
 }

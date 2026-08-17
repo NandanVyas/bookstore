@@ -1,14 +1,20 @@
 import "server-only";
+import { connectDB } from "@/lib/db";
 import BookModel from "@/models/Book";
 import OrderModel from "@/models/Order";
 import UserModel from "@/models/User";
-import { prepareBookDatabase } from "@/services/book-compatibility";
 
 export async function getAdminOverview() {
-  await prepareBookDatabase();
+  await connectDB();
   const [books, lowStock, orders, users] = await Promise.all([
-    BookModel.countDocuments({ isActive: true }),
-    BookModel.countDocuments({ isActive: true, stock: { $lte: 5 } }),
+    BookModel.countDocuments({ isActive: { $ne: false } }),
+    BookModel.countDocuments({
+      isActive: { $ne: false },
+      $or: [
+        { stock: { $lte: 5 } },
+        { stock: { $exists: false }, availableQuantity: { $lte: 5 } },
+      ],
+    }),
     OrderModel.countDocuments(),
     UserModel.countDocuments(),
   ]);
