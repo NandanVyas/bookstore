@@ -25,8 +25,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
+# environment files (keep the documented template)
+.env*
+!.env.example
 
 # vercel
 .vercel
@@ -34,3 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# test output
+/playwright-report/
+/test-results/
+
+# local tooling
+.eslintcache

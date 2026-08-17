@@ -1,0 +1,3 @@
+import { ForgotPasswordForm } from "@/components/auth/password-reset-forms";
+export const metadata = { title: "Forgot password", robots: { index: false, follow: false } };
+export default function ForgotPasswordPage() { return <div className="auth-layout"><section className="auth-layout__art"><div><span className="eyebrow">ACCOUNT RECOVERY</span><h1>Find your way<br /><em>back in.</em></h1><p>Reset links expire after 30 minutes and can only be used once.</p></div></section><section className="auth-layout__form"><div className="auth-card"><span className="eyebrow">RESET PASSWORD</span><h2>Check your inbox</h2><p>Enter your email. We’ll respond the same way whether or not an account exists.</p><ForgotPasswordForm /></div></section></div>; }

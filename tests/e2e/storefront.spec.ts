@@ -1,0 +1,30 @@
+import { expect, test } from "@playwright/test";
+
+test("reader can browse, authenticate, place a demo order, and view it", async ({ page }) => {
+  const email = `reader-${Date.now()}@example.test`;
+  await page.goto("/books");
+  await expect(page.getByRole("heading", { name: "Books worth keeping close." })).toBeVisible();
+  await page.getByRole("button", { name: /Add .* to cart/ }).first().click();
+  await page.goto("/register");
+  await page.getByLabel("Full name").fill("Demo Reader");
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill("portfolio2026");
+  await page.getByLabel("Confirm password").fill("portfolio2026");
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page).toHaveURL(/\/account/);
+  await page.getByRole("button", { name: "Log out" }).click();
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password").fill("portfolio2026");
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.goto("/checkout");
+  await page.getByLabel("Phone").fill("+91 9876543210");
+  await page.getByLabel("Postal code").fill("110001");
+  await page.getByLabel("Address", { exact: true }).fill("42 Library Road");
+  await page.getByLabel("City").fill("Delhi");
+  await page.getByLabel("State").fill("Delhi");
+  await page.getByRole("button", { name: /Place demo order/ }).click();
+  await expect(page.getByText("Demo order confirmed")).toBeVisible();
+  await page.goto("/orders");
+  await expect(page.getByRole("heading", { name: "Your orders" })).toBeVisible();
+  await expect(page.getByText(/Order #NV-/).first()).toBeVisible();
+});

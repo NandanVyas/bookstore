@@ -1,34 +1,44 @@
 {
-  "name": "bookstore",
-  "version": "0.1.0",
+  "name": "nv-bookstore",
+  "version": "2.0.0",
+  "type": "module",
   "private": true,
+  "description": "A modern full-stack bookstore built with Next.js, TypeScript, and MongoDB.",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "db:seed": "tsx scripts/seed.ts",
+    "admin:promote": "tsx scripts/promote-admin.ts"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/material": "^5.10.6",
-    "crypto-js": "^4.1.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.4",
-    "next": "12.2.5",
-    "paytmchecksum": "^1.5.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.4.0",
-    "react-toastify": "^9.0.8",
-    "react-top-loading-bar": "^2.3.1",
-    "tailwind-typewriter": "^1.0.1"
+    "argon2": "0.44.0",
+    "jose": "^6.1.0",
+    "lucide-react": "^1.31.0",
+    "mongoose": "^9.1.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1",
+    "zod": "^4.3.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.8",
-    "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8"
+    "@playwright/test": "^1.58.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.3.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
   }
 }

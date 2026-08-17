@@ -1,0 +1,9 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ArrowRight, ShieldCheck, UserRound } from "lucide-react";
+import { ProfileForm, SecurityForm } from "@/components/account-forms";
+import { LogoutButton } from "@/components/logout-button";
+import { getCurrentUser } from "@/services/user-service";
+
+export const metadata = { title: "Account", robots: { index: false, follow: false } };
+export default async function AccountPage() { const user = await getCurrentUser(); if (!user) redirect("/login?next=/account"); return <div className="app-page shell"><header className="app-page__header account-header"><div><span className="eyebrow">YOUR ACCOUNT</span><h1>Welcome, {user.name.split(" ")[0]}</h1><p>Manage only the information needed for this demo storefront.</p></div><div className="account-header__actions"><div className="account-badge"><UserRound /><span>{user.role === "admin" ? "Administrator" : "Reader account"}</span></div><LogoutButton /></div></header><nav className="tabs" aria-label="Account sections"><a href="#profile" className="is-active">Profile</a><Link href="/orders">Orders</Link><a href="#security">Security</a>{user.role === "admin" && <Link href="/admin">Admin</Link>}</nav><div className="two-column"><section className="panel" id="profile"><div className="panel-heading"><UserRound /><div><h2>Profile</h2><p>Contact and demo shipping defaults.</p></div></div><ProfileForm user={user} /></section><section className="panel" id="security"><div className="panel-heading"><ShieldCheck /><div><h2>Security</h2><p>Changing your password signs out every session.</p></div></div><SecurityForm /><Link href="/forgot-password" className="text-link account-reset-link">Forgot your current password? <ArrowRight size={15} /></Link></section></div></div>; }

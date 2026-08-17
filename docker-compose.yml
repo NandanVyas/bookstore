@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - bookstore-mongo:/data/db
+
+  app:
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/nv-bookstore
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET to a random value of at least 32 characters}
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+volumes:
+  bookstore-mongo:

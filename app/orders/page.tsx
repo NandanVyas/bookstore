@@ -1,0 +1,9 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ArrowRight, PackageOpen } from "lucide-react";
+import { formatCurrency, formatDate } from "@/lib/format";
+import { listOrders } from "@/services/order-service";
+import { getCurrentUser } from "@/services/user-service";
+
+export const metadata = { title: "Orders", robots: { index: false, follow: false } };
+export default async function OrdersPage() { const user = await getCurrentUser(); if (!user) redirect("/login?next=/orders"); const orders = await listOrders(user.id); return <div className="app-page shell"><header className="app-page__header"><span className="eyebrow">ORDER HISTORY</span><h1>Your orders</h1><p>Review demo order totals, status, and the book snapshots captured at checkout.</p></header>{orders.length ? <div className="stack">{orders.map((order) => <article className="order-card" key={order.id}><div className="order-card__header"><div><strong>Order #{order.orderNumber}</strong><small>{formatDate(order.createdAt)}</small></div><span className="status-pill">{order.status}</span></div><div className="order-card__body"><div className="order-card__items">{order.items.slice(0, 2).map((item) => <div className="order-card__item" key={item.bookId}><span>{item.quantity} × {item.title}</span><span>{formatCurrency(item.priceAtPurchase * item.quantity)}</span></div>)}{order.items.length > 2 && <small>+ {order.items.length - 2} more items</small>}</div><div className="order-card__footer"><strong>{formatCurrency(order.total)}</strong><Link href={`/orders/${order.id}`} className="text-link">View order <ArrowRight size={15} /></Link></div></div></article>)}</div> : <div className="empty-state"><PackageOpen /><h2>No orders yet.</h2><p>Your completed demo orders will appear here.</p><Link href="/books" className="button button--primary">Discover books</Link></div>}</div>; }
