@@ -9,9 +9,7 @@ export function getRequiredEnv(name: string): string {
 }
 
 export function getDatabaseUri(): string {
-  // The existing Vercel project still carries its original server-only name.
-  // Prefer it during the V2 transition; new deployments use MONGODB_URI.
-  return process.env.MONGO_URI?.trim() || getRequiredEnv("MONGODB_URI");
+  return process.env.MONGODB_URI?.trim() || getRequiredEnv("MONGO_URI");
 }
 
 export function getAppUrl(): string {
