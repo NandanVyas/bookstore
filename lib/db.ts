@@ -34,6 +34,12 @@ export async function connectDB(): Promise<typeof mongoose> {
   }
 }
 
-export function databaseStatus(): "connected" | "disconnected" {
-  return mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+export async function pingDatabase(): Promise<void> {
+  const connection = await connectDB();
+  const database = connection.connection.db;
+  if (!database || connection.connection.readyState !== 1) {
+    throw new Error("MongoDB connection is not ready.");
+  }
+
+  await database.command({ ping: 1 }, { timeoutMS: 5_000 });
 }
