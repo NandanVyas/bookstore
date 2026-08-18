@@ -1,6 +1,6 @@
 import "server-only";
 import mongoose from "mongoose";
-import { getRequiredEnv } from "@/lib/env";
+import { getDatabaseUri } from "@/lib/env";
 
 type MongooseCache = {
   connection: typeof mongoose | null;
@@ -18,7 +18,7 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (cache.connection) return cache.connection;
 
   if (!cache.promise) {
-    cache.promise = mongoose.connect(getRequiredEnv("MONGODB_URI"), {
+    cache.promise = mongoose.connect(getDatabaseUri(), {
       bufferCommands: false,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5_000,
