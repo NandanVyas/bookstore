@@ -4,6 +4,7 @@ import type { SortOrder } from "mongoose";
 import { connectDB } from "@/lib/db";
 import { ApiError } from "@/lib/http";
 import BookModel from "@/models/Book";
+import { seedBooks } from "@/data/seed-books";
 import type { Book } from "@/types";
 
 type BookQuery = {
@@ -60,8 +61,39 @@ export function toBook(book: LeanBook): Book {
 
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-export async function listBooks(query: BookQuery): Promise<{ books: Book[]; categories: string[] }> {
+let catalogueBootstrap: Promise<void> | null = null;
+
+async function ensureCatalogueExists(): Promise<void> {
+  if (!catalogueBootstrap) {
+    catalogueBootstrap = (async () => {
+      if (await BookModel.exists({})) return;
+
+      await BookModel.bulkWrite(
+        seedBooks.map((book) => ({
+          updateOne: {
+            filter: { slug: book.slug },
+            update: { $set: { ...book, isActive: true } },
+            upsert: true,
+          },
+        })),
+        { ordered: false },
+      );
+    })().catch((error: unknown) => {
+      catalogueBootstrap = null;
+      throw error;
+    });
+  }
+
+  await catalogueBootstrap;
+}
+
+async function preparePublicCatalogue(): Promise<void> {
   await connectDB();
+  await ensureCatalogueExists();
+}
+
+export async function listBooks(query: BookQuery): Promise<{ books: Book[]; categories: string[] }> {
+  await preparePublicCatalogue();
   const filter: {
     isActive: { $ne: boolean };
     $or?: Array<{ title?: RegExp; author?: RegExp; isbn?: RegExp }>;
@@ -112,13 +144,13 @@ export async function listBooks(query: BookQuery): Promise<{ books: Book[]; cate
 }
 
 export async function getFeaturedBooks(limit = 4): Promise<Book[]> {
-  await connectDB();
+  await preparePublicCatalogue();
   const records = await BookModel.find({ isActive: { $ne: false } }).sort({ featured: -1, createdAt: -1 }).limit(limit).lean();
   return (records as unknown as LeanBook[]).map(toBook);
 }
 
 export const getBookBySlug = cache(async (slug: string): Promise<Book | null> => {
-  await connectDB();
+  await preparePublicCatalogue();
   const record = await BookModel.findOne({ slug, isActive: { $ne: false } }).lean();
   return record ? toBook(record as unknown as LeanBook) : null;
 });
